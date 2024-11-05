@@ -1,0 +1,16 @@
+/*
+/*/
+
+!/Assets/
+!/ProjectSettings/
+!/Packages/
+!.gitignore
+
+.DS_Store
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+RECYCLE.BIN
+Desktop.ini
+Assets/GitIgnoreFolder/*
