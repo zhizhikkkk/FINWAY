@@ -6,6 +6,7 @@ using UniRx;
 using Zenject;
 using R3;
 using System;
+using UnityEngine.SceneManagement;
 
 public class AuthUIController : MonoBehaviour
 {
@@ -65,6 +66,7 @@ public class AuthUIController : MonoBehaviour
             if (success)
             {
                 Debug.Log("Login successful");
+                SceneManager.LoadScene("Home");
             }
             else
             {

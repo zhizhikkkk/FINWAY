@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f5ef008c2a52e41a65feb2d26e5fe4, type: 3}
+  m_Name: CityLocationGraph
+  m_EditorClassIdentifier: 
+  nodes:
+  - nodeId: Home
+    position: {x: 0, y: 0}
+    edges:
+    - toNodeId: CryptoLab
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Birzha
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Bank
+      timeCost: 2
+      moneyCost: 3
+  - nodeId: Birzha
+    position: {x: 0, y: 0}
+    edges:
+    - toNodeId: Home
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Bank
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Cryptolab
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Casino
+      timeCost: 2
+      moneyCost: 3
+  - nodeId: CryptoLab
+    position: {x: 0, y: 0}
+    edges:
+    - toNodeId: Home
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Birzha
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Bank
+      timeCost: 2
+      moneyCost: 3
+    - toNodeId: Casino
+      timeCost: 2
+      moneyCost: 3
+  - nodeId: Bank
+    position: {x: 0, y: 0}
+    edges:
+    - toNodeId: CryptoLab
+      timeCost: 2
+      moneyCost: 3
+    - toNodeId: Birzha
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Home
+      timeCost: 2
+      moneyCost: 3
+    - toNodeId: Casino
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Work
+      timeCost: 1
+      moneyCost: 1
+  - nodeId: Casino
+    position: {x: 0, y: 0}
+    edges:
+    - toNodeId: CryptoLab
+      timeCost: 2
+      moneyCost: 3
+    - toNodeId: Bank
+      timeCost: 2
+      moneyCost: 3
+    - toNodeId: Birzha
+      timeCost: 2
+      moneyCost: 3
+    - toNodeId: Work
+      timeCost: 1
+      moneyCost: 2
+  - nodeId: Work
+    position: {x: 0, y: 0}
+    edges:
+    - toNodeId: Bank
+      timeCost: 1
+      moneyCost: 2
+    - toNodeId: Casino
+      timeCost: 1
+      moneyCost: 2

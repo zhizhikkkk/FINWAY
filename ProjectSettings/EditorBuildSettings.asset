@@ -6,6 +6,36 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Authorization.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/City.unity
+    guid: b4f9a4849f9c28e4fb643642bb4ed8ee
+  - enabled: 1
+    path: Assets/Scenes/Customization.unity
+    guid: 4c341c4c3524c2f40822a9d9a4fd3196
+  - enabled: 1
+    path: Assets/Scenes/Locations/Home.unity
+    guid: 9d0843595ac894644ae22b3938dca69b
+  - enabled: 1
+    path: Assets/Scenes/PersistentUI.unity
+    guid: 8dd75dc24d9e4314580208d7c5fbf836
+  - enabled: 1
+    path: Assets/Scenes/Locations/Bank.unity
+    guid: cc90b532860494140be241821e23f44d
+  - enabled: 1
+    path: Assets/Scenes/Locations/Birzha.unity
+    guid: 4439d684528aedf44932740afc978b4b
+  - enabled: 1
+    path: Assets/Scenes/Locations/CryptoLab.unity
+    guid: e41085180eca4bc488417a2dbd359bd7
+  - enabled: 1
+    path: Assets/Scenes/Locations/Casino.unity
+    guid: b1fc62e5274200145b57decc78ebc40c
+  - enabled: 1
+    path: Assets/Scenes/Locations/Map.unity
+    guid: f1a6cc8efd1dc544d82abaaddc938ff2
+  - enabled: 1
+    path: Assets/Scenes/Locations/Work.unity
+    guid: 17379ae08c43d7a45a17c0d0127162fb
   m_configObjects: {}
