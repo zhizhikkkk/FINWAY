@@ -62,7 +62,8 @@ public class MapUIController : MonoBehaviour
 
         if (from == _targetLocation)
         {
-            Debug.Log("You are already in this location!");
+            _locationManager.SetLocation(_targetLocation);
+            SceneManager.LoadScene(_targetLocation);
             return;
         }
 

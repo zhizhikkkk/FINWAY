@@ -18,7 +18,7 @@ public class LocationGraph : ScriptableObject
 public class NodeData
 {
     public string nodeId;
-    public Vector2 position; // ƒл€ отрисовки и/или анимации движени€
+    public Vector2 position; 
     public List<EdgeData> edges;
 }
 
@@ -28,5 +28,4 @@ public class EdgeData
     public string toNodeId;
     public float timeCost;
     public float moneyCost;
-    // ћожно добавить и другие параметры (energyCost, distance и т.д.)
 }

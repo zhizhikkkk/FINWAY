@@ -14,7 +14,6 @@ public static class LocationPathfinding
         var prev = new Dictionary<string, string>();
         var unvisited = new List<string>();
 
-        // Инициализация
         foreach (var node in graph.nodes)
         {
             dist[node.nodeId] = float.MaxValue;
@@ -25,7 +24,6 @@ public static class LocationPathfinding
 
         while (unvisited.Count > 0)
         {
-            // Выбираем узел u с минимальной dist[u]
             string u = null;
             float minDist = float.MaxValue;
             foreach (var n in unvisited)
@@ -49,7 +47,6 @@ public static class LocationPathfinding
             {
                 if (!unvisited.Contains(edge.toNodeId)) continue;
 
-                // В зависимости от режима берём либо timeCost, либо moneyCost
                 float edgeCost = (travelMode == TravelMode.Time)
                                  ? edge.timeCost
                                  : edge.moneyCost;

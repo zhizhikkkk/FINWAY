@@ -10,6 +10,10 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<PlayerModel>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<PlayerLocationManager>().AsSingle().NonLazy();
         Container.Bind<MapUIController>().FromComponentInHierarchy().AsSingle();
-        
+        Container.Bind<PlayerDataManager>().AsSingle().NonLazy();
+        Container.Bind<BankManager>().AsSingle().NonLazy();
+        Container.Bind<BankTransferService>().AsSingle().NonLazy();
+       
+
     }
 }
