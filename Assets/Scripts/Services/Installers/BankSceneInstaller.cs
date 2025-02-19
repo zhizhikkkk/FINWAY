@@ -12,8 +12,6 @@ public class BankSceneInstaller : MonoInstaller
             SceneManager.LoadScene("PersistentUI", LoadSceneMode.Additive);
         }
 
-        // Если PlayerModel, BankManager, BankTransferService и PlayerDataManager ещё не зарегистрированы глобально
-        Container.Bind<PlayerModel>().AsSingle().NonLazy();
         //Container.Bind<BankManager>().AsSingle().NonLazy(); // В конструкторе создаст 3 банка с 1 картой
         //Container.Bind<BankTransferService>().AsSingle().NonLazy();
         
