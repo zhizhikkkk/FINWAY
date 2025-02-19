@@ -1,14 +1,14 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using Zenject;
 using UniRx;
+using Zenject;
 
 public class HUDView : MonoBehaviour
 {
-    public TextMeshProUGUI BudgetText;
-    public TextMeshProUGUI EnergyText;
-    public TextMeshProUGUI TimeText; 
+    public TMP_Text cashText;
+    public TMP_Text budgetText;
+    public TMP_Text energyText;
+    public TMP_Text timeText;
 
     private PlayerModel _playerModel;
     private CompositeDisposable _disposables = new CompositeDisposable();
@@ -17,7 +17,7 @@ public class HUDView : MonoBehaviour
     public void Construct(PlayerModel playerModel)
     {
         _playerModel = playerModel;
-
+        _playerModel.Cash.Subscribe(UpdateCash).AddTo(_disposables);
         _playerModel.Budget.Subscribe(UpdateBudget).AddTo(_disposables);
         _playerModel.Energy.Subscribe(UpdateEnergy).AddTo(_disposables);
         _playerModel.Days.Subscribe(_ => UpdateTime()).AddTo(_disposables);
@@ -26,6 +26,7 @@ public class HUDView : MonoBehaviour
 
     private void Start()
     {
+        UpdateCash(_playerModel.Cash.Value);
         UpdateBudget(_playerModel.Budget.Value);
         UpdateEnergy(_playerModel.Energy.Value);
         UpdateTime();
@@ -36,18 +37,23 @@ public class HUDView : MonoBehaviour
         _disposables.Dispose();
     }
 
-    private void UpdateBudget(float budget)
+    private void UpdateCash(float value)
     {
-        BudgetText.text = $"Ѕюджет: {budget}";
+        cashText.text = $"Cash: {value}";
     }
 
-    private void UpdateEnergy(float energy)
+    private void UpdateBudget(float value)
     {
-        EnergyText.text = $"Ёнерги€: {energy}";
+        budgetText.text = $"Budget: {value}";
+    }
+
+    private void UpdateEnergy(float value)
+    {
+        energyText.text = $"Energy: {value}";
     }
 
     private void UpdateTime()
     {
-        TimeText.text = $"¬рем€: ƒень {_playerModel.Days.Value}, „асы {_playerModel.Hours.Value}";
+        timeText.text = $"Time: Day {_playerModel.Days.Value}, Hour {_playerModel.Hours.Value}";
     }
 }

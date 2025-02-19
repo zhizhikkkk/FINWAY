@@ -27,6 +27,7 @@ public class GameManager : IInitializable
             PlayerModel.Energy.Value = savedData.Energy;
             PlayerModel.Days.Value = savedData.Days;
             PlayerModel.Hours.Value = savedData.Hours;
+            PlayerModel.BankCards = savedData.BankCards ?? new List<BankCard>();
 
             // ≈сли список банковских карт в сохранЄнных данных не пустой, используем его
             if (savedData.BankCards != null)
@@ -51,5 +52,9 @@ public class GameManager : IInitializable
     public void Initialize()
     {
         // «десь можно выполнить дополнительную инициализацию, если требуетс€.
+    }
+    public void SaveData()
+    {
+        _dataManager.Save(PlayerModel);
     }
 }

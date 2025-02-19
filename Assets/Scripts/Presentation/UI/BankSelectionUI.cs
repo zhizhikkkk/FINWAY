@@ -18,6 +18,9 @@ public class BankSelectionUI : MonoBehaviour
 
     // Панель перевода (откуда -> куда -> сколько)
     public GameObject transferPanel;
+    public TextMeshProUGUI cardName;
+    public TextMeshProUGUI cardNumber;
+    public TextMeshProUGUI cardAmount;
     public TMP_InputField toCardInput;
     public TMP_InputField amountInput;
     public Button confirmTransferButton;
@@ -74,12 +77,18 @@ public class BankSelectionUI : MonoBehaviour
     private void OpenBank(string bankName)
     {
         _selectedBank = _bankManager.GetBank(bankName);
+       
 
         // Так как у нас ровно 1 карта на банк, достаём её
         var cards = _selectedBank.GetPlayerCards();
         if (cards.Count > 0)
         {
             _selectedCard = cards[0];
+            cardName.text = _selectedCard.BankName;
+            string last4 = "*" + _selectedCard.CardNumber.Substring(_selectedCard.CardNumber.Length - 4);
+            cardNumber.text = last4;
+            cardAmount.text = _selectedCard.Balance.ToString() + "$";
+
             singleCardPanel.SetActive(true);
             transferPanel.SetActive(false);
 

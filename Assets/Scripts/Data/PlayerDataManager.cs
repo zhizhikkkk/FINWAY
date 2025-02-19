@@ -12,10 +12,15 @@ public class PlayerDataManager
 
     public void Save(PlayerModel playerModel)
     {
-        // Собираем PlayerData
-        PlayerData data = new PlayerData();
-        data.Cash = playerModel.Cash.Value; // если нужно
-        data.BankCards = playerModel.BankCards;
+        PlayerData data = new PlayerData
+        {
+            Cash = playerModel.Cash.Value,
+            Budget = playerModel.Budget.Value,
+            Energy = playerModel.Energy.Value,
+            Days = playerModel.Days.Value,
+            Hours = playerModel.Hours.Value,
+            BankCards = playerModel.BankCards
+        };
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);

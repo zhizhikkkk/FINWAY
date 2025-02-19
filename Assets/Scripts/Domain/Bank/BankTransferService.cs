@@ -54,7 +54,7 @@ public class BankTransferService
 
         // Пополняем карту-получатель
         toCard.Deposit(amount);
-
+        _player.RecalculateBudget();
         Debug.Log($"Transferred {amount} from {fromCard.CardNumber} to {toCard.CardNumber}. Commission: {commission}");
 
         return true;

@@ -4,6 +4,7 @@ using TMPro;
 using Zenject;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using Zenject.SpaceFighter;
 
 public class MapUIController : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class MapUIController : MonoBehaviour
 
     private PlayerLocationManager _locationManager;
     private PlayerModel _playerModel;
+    private PlayerDataManager _playerDataManager;
 
     private string _targetLocation;
     private float _busCost;
@@ -27,10 +29,11 @@ public class MapUIController : MonoBehaviour
     private List<NodeData> _walkPath;
 
     [Inject]
-    public void Construct(PlayerLocationManager locationManager, PlayerModel playerModel)
+    public void Construct(PlayerLocationManager locationManager, PlayerModel playerModel, PlayerDataManager _dataManager)
     {
         _locationManager = locationManager;
         _playerModel = playerModel;
+        _playerDataManager = _dataManager;
         Debug.Log($"[MapUIController] Injected PlayerLocationManager: {_locationManager}");
     }
 
@@ -88,20 +91,18 @@ public class MapUIController : MonoBehaviour
 
     private void OnMoneyConfirm()
     {
-        if (_busCost == float.MaxValue)
+        if (_playerModel.Cash.Value < _busCost)
         {
-            Debug.Log("No bus route available!");
+            Debug.Log("Not enough cash!");
             return;
         }
 
-        if (_playerModel.Budget.Value < _busCost)
-        {
-            Debug.Log("Not enough money!");
-            return;
-        }
-        Debug.Log("Budget: " + _playerModel.Budget);
-        _playerModel.ChangeBudget(-_busCost);
-        Debug.Log("Budget: " + _playerModel.Budget);
+        _playerModel.Cash.Value -= _busCost;
+
+        _playerModel.RecalculateBudget();
+
+        _playerDataManager.Save(_playerModel);
+
         _locationManager.SetLocation(_targetLocation);
         SceneManager.LoadScene(_targetLocation);
     }
@@ -115,7 +116,7 @@ public class MapUIController : MonoBehaviour
         }
 
         _playerModel.AddHours((int)_walkCost);
-
+        _playerDataManager.Save(_playerModel);
         _locationManager.SetLocation(_targetLocation);
         SceneManager.LoadScene(_targetLocation);
     }

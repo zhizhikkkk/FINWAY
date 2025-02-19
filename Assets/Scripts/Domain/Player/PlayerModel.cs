@@ -29,11 +29,16 @@ public class PlayerModel
         BankCards = new List<BankCard>();
     }
 
-    public void ChangeBudget(float amount)
+    
+    public void RecalculateBudget()
     {
-        Budget.Value += amount;
+        float total = Cash.Value;
+        foreach (var card in BankCards)
+        {
+            total += card.Balance;
+        }
+        Budget.Value = total;
     }
-
     public void ChangeEnergy(float amount)
     {
         Energy.Value += amount;
