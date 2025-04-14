@@ -26,6 +26,8 @@ public class GameManager : IInitializable
             PlayerModel.Cash.Value = savedData.Cash;
             PlayerModel.Budget.Value = savedData.Budget;
             PlayerModel.Energy.Value = savedData.Energy;
+            PlayerModel.Happiness.Value = savedData.Happiness;
+
             PlayerModel.Days.Value = savedData.Days;
             PlayerModel.Hours.Value = savedData.Hours;
             PlayerModel.BankCards = savedData.BankCards ?? new List<BankCard>();

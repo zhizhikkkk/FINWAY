@@ -10,6 +10,7 @@ public class PlayerModel
 
     public ReactiveProperty<float> Energy { get; private set; }
 
+    public ReactiveProperty<float> Happiness { get; private set; }
     public ReactiveProperty<int> Days { get; private set; }
     public ReactiveProperty<int> Hours { get; private set; }
 
@@ -20,6 +21,7 @@ public class PlayerModel
         Cash = new ReactiveProperty<float>(1000f);
         Budget = new ReactiveProperty<float>(1000f); 
         Energy = new ReactiveProperty<float>(100f);
+        Happiness = new ReactiveProperty<float>(50f);
         Days = new ReactiveProperty<int>(1);
         Hours = new ReactiveProperty<int>(0);
         BankCards = new List<BankCard>();
@@ -49,7 +51,10 @@ public class PlayerModel
     {
         Energy.Value += amount;
     }
-
+    public void ChangeHappiness(float amount)
+    {
+        Happiness.Value += amount;
+    }
     public void AddHours(int hoursToAdd)
     {
         Hours.Value += hoursToAdd;

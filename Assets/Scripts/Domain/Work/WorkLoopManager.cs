@@ -75,8 +75,20 @@ public class WorkLoopManager : MonoBehaviour
                 if (timeAccumulator >= 1f)
                 {
                     int hoursToAdd = Mathf.FloorToInt(timeAccumulator);
-                    playerModel.AddHours(hoursToAdd);
                     timeAccumulator -= hoursToAdd;
+
+                    for (int i = 0; i < hoursToAdd; i++)
+                    {
+                        playerModel.AddHours(1);
+                        playerModel.ChangeHappiness(-2f);
+                        playerModel.ChangeEnergy(-5f);
+
+                        if (playerModel.Energy.Value < 5f)
+                        {
+                            ToggleWork(); 
+                            yield break;
+                        }
+                    }
                 }
 
                 yield return null;
@@ -86,12 +98,6 @@ public class WorkLoopManager : MonoBehaviour
             playerModel.SetWorkProgress(jobId, 0f);
 
             playerModel.Cash.Value += moneyPerCycle;
-            playerModel.ChangeEnergy(-energyCost);
-
-            if (playerModel.Energy.Value < energyCost)
-            {
-                ToggleWork(); // автоматически выключит работу и цикл завершится
-            }
         }
     }
 

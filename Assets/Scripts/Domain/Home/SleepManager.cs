@@ -13,6 +13,7 @@ public class SleepManager : MonoBehaviour
     [Header("Настройки сна")]
     [SerializeField] private float energyPerHour = 2f;
     [SerializeField] private float maxEnergy = 100f;
+    [SerializeField] private float happinessPerHour = 10f;
 
     private bool isSleeping = false;
     private Coroutine sleepRoutine;
@@ -32,16 +33,22 @@ public class SleepManager : MonoBehaviour
 
     private void ToggleSleep()
     {
+        // Не даём заснуть, если энергия уже максимальная
+        if (!isSleeping && playerModel.Energy.Value >= maxEnergy)
+        {
+            Debug.Log("Вы уже полностью отдохнули.");
+            return;
+        }
+
         isSleeping = !isSleeping;
 
         if (isSleeping)
         {
             sleepRoutine = StartCoroutine(SleepLoop());
         }
-        else if (sleepRoutine != null)
+        else
         {
-            StopCoroutine(sleepRoutine);
-            sleepRoutine = null;
+            StopSleeping();
         }
 
         UpdateButtonText();
@@ -66,16 +73,32 @@ public class SleepManager : MonoBehaviour
                     {
                         playerModel.AddHours(1);
                         playerModel.ChangeEnergy(energyPerHour);
+                        playerModel.ChangeHappiness(happinessPerHour);
                     }
                     else
                     {
-                        isSleeping = false;
+                        Debug.Log("Энергия достигла максимума — пробуждение.");
+                        StopSleeping(); // Автоматическое пробуждение
+                        yield break;
                     }
                 }
             }
 
             yield return null;
         }
+    }
+
+    private void StopSleeping()
+    {
+        isSleeping = false;
+
+        if (sleepRoutine != null)
+        {
+            StopCoroutine(sleepRoutine);
+            sleepRoutine = null;
+        }
+
+        UpdateButtonText();
     }
 
     private void UpdateButtonText()

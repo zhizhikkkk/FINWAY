@@ -18,6 +18,7 @@ public class PlayerDataManager
             Cash = playerModel.Cash.Value,
             Budget = playerModel.Budget.Value,
             Energy = playerModel.Energy.Value,
+            Happiness = playerModel.Happiness.Value,
             Days = playerModel.Days.Value,
             Hours = playerModel.Hours.Value,
             BankCards = playerModel.BankCards,

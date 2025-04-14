@@ -9,6 +9,7 @@ public class HUDView : MonoBehaviour
     public TMP_Text budgetText;
     public TMP_Text energyText;
     public TMP_Text timeText;
+    public TMP_Text happinessText;
 
     private PlayerModel _playerModel;
     private CompositeDisposable _disposables = new CompositeDisposable();
@@ -22,6 +23,7 @@ public class HUDView : MonoBehaviour
         _playerModel.Energy.Subscribe(UpdateEnergy).AddTo(_disposables);
         _playerModel.Days.Subscribe(_ => UpdateTime()).AddTo(_disposables);
         _playerModel.Hours.Subscribe(_ => UpdateTime()).AddTo(_disposables);
+        _playerModel.Happiness.Subscribe(UpdateHappiness).AddTo(_disposables);
     }
 
     private void Start()
@@ -29,6 +31,7 @@ public class HUDView : MonoBehaviour
         UpdateCash(_playerModel.Cash.Value);
         UpdateBudget(_playerModel.Budget.Value);
         UpdateEnergy(_playerModel.Energy.Value);
+        UpdateHappiness(_playerModel.Happiness.Value);
         UpdateTime();
     }
 
@@ -51,7 +54,10 @@ public class HUDView : MonoBehaviour
     {
         energyText.text = $"Energy: {value}";
     }
-
+    private void UpdateHappiness(float value)
+    {
+        happinessText.text = $"Happiness: {Mathf.RoundToInt(value)}";
+    }
     private void UpdateTime()
     {
         timeText.text = $"Time: Day {_playerModel.Days.Value}, Hour {_playerModel.Hours.Value}";
