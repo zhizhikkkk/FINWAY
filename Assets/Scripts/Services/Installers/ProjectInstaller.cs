@@ -13,7 +13,9 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<PlayerDataManager>().AsSingle().NonLazy();
         Container.Bind<BankManager>().AsSingle().NonLazy();
         Container.Bind<BankTransferService>().AsSingle().NonLazy();
-       
+        
+
+
 
     }
 }

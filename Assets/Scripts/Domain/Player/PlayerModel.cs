@@ -50,10 +50,26 @@ public class PlayerModel
     public void ChangeEnergy(float amount)
     {
         Energy.Value += amount;
+        if(Energy.Value <0f) {
+            Energy.Value = 0f;
+        }
+
+        if(Energy.Value > 100f) {
+            Energy.Value = 100f;
+        }
     }
     public void ChangeHappiness(float amount)
     {
         Happiness.Value += amount;
+        if (Happiness.Value < 0f)
+        {
+            Happiness.Value = 0f;
+        }
+
+        if (Happiness.Value > 100f)
+        {
+            Happiness.Value = 100f;
+        }
     }
     public void AddHours(int hoursToAdd)
     {

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1e0e0e718fa7f4c42b04a8f249b05b5b
+guid: ec4fb9bc81448fa448d0eb16fc724a9b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -100,124 +100,19 @@ TextureImporter:
       name: Work_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 46
-        width: 622
-        height: 598
+        x: 747
+        y: 486
+        width: 614
+        height: 601
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 3, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e35322294ae4d8d45a0e44512e918fd0
-      internalID: 1761588305
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Work_1
-      rect:
-        serializedVersion: 2
-        x: 703
-        y: 156
-        width: 664
-        height: 384
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 269ab90e87d96ed48b93cece42453720
-      internalID: -1787956322
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Work_2
-      rect:
-        serializedVersion: 2
-        x: 780
-        y: 337
-        width: 108
-        height: 71
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4a63208434cbb894fac4781026ab3ae1
-      internalID: 817468246
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Work_3
-      rect:
-        serializedVersion: 2
-        x: 943
-        y: 346
-        width: 96
-        height: 63
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3c9cd29f7615b1c43a0136b208783a37
-      internalID: -230045369
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Work_4
-      rect:
-        serializedVersion: 2
-        x: 771
-        y: 241
-        width: 226
-        height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09e21ec9184d0fb4cb6c01ccfd2c8318
-      internalID: 1136379506
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Work_5
-      rect:
-        serializedVersion: 2
-        x: 724
-        y: 71
-        width: 522
-        height: 68
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 228291e909d61bc41925f4effe867b57
-      internalID: 1605720440
+      spriteID: d2d73e90abb7b834dafce7b8fbe328dd
+      internalID: -974499571
       vertices: []
       indices: 
       edges: []
@@ -233,12 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Work_0: 1761588305
-      Work_1: -1787956322
-      Work_2: 817468246
-      Work_3: -230045369
-      Work_4: 1136379506
-      Work_5: 1605720440
+      Work_0: -974499571
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

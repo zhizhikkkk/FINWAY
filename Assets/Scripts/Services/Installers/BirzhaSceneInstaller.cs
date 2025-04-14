@@ -15,5 +15,6 @@ public class BirzhaSceneInstaller : MonoInstaller
         {
             SceneManager.LoadScene("PersistentUI", LoadSceneMode.Additive);
         }
+        Container.Bind<StockMarketManager>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
 }
