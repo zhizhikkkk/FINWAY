@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using Zenject;
+using Zenject.SpaceFighter;
 
 public class BankSelectionUI : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class BankSelectionUI : MonoBehaviour
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardNumber;
     public TextMeshProUGUI cardAmount;
+    public TextMeshProUGUI statusText;
     public TMP_InputField toCardInput;
     public TMP_InputField amountInput;
     public Button confirmTransferButton;
@@ -62,6 +64,7 @@ public class BankSelectionUI : MonoBehaviour
         confirmTransferButton.onClick.AddListener(OnConfirmTransfer);
         cancelTransferButton.onClick.AddListener(() => transferPanel.SetActive(false));
         closeSingleCardPanelButton.onClick.AddListener(() => singleCardPanel.SetActive(false));
+        toCardInput.onValueChanged.AddListener(OnCardNumberChanged);
     }
 
     private void GenerateBankButtons()
@@ -111,6 +114,36 @@ public class BankSelectionUI : MonoBehaviour
         toCardInput.text = "";
         amountInput.text = "";
     }
+    private void OnCardNumberChanged(string input)
+    {
+        // Если длина не 16, просто очищаем статус
+        if (input.Length != 16)
+        {
+            statusText.text = "";
+            return;
+        }
+
+        // Ищем карту в списке всех карт игрока
+        BankCard foundCard = _player.BankCards.Find(card => card.CardNumber == input);
+
+        if (foundCard != null)
+        {
+            // Проверяем, не совпадает ли она с исходной картой
+            if (foundCard == _selectedCard)
+            {
+                statusText.text = "Нельзя переводить на ту же карту!";
+            }
+            else
+            {
+                // Выводим краткую информацию о карте-получателе
+                statusText.text = $"Карта получателя: {foundCard.BankName}";
+            }
+        }
+        else
+        {
+            statusText.text = "Такой карты не существует. Проверьте номер карты.";
+        }
+    }
 
     private void OnConfirmTransfer()
     {
@@ -123,6 +156,7 @@ public class BankSelectionUI : MonoBehaviour
             Debug.Log("Invalid amount");
             return;
         }
+        
 
         bool success = _transferService.TransferMoney(fromCardNumber, toCardNumber, amount);
         if (success)

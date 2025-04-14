@@ -295,6 +295,7 @@ MonoBehaviour:
   cardName: {fileID: 524431512}
   cardNumber: {fileID: 1063021626}
   cardAmount: {fileID: 1409425369}
+  statusText: {fileID: 272047555}
   toCardInput: {fileID: 545535098}
   amountInput: {fileID: 793138885}
   confirmTransferButton: {fileID: 260081967}
@@ -2345,7 +2346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 24.03, y: -122.77}
+  m_AnchoredPosition: {x: 24.03, y: -122.76999}
   m_SizeDelta: {x: 448.07, y: 125.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1197754503
