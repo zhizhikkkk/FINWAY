@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Collections.Generic;
 
 public class PlayerDataManager
 {
@@ -19,9 +20,17 @@ public class PlayerDataManager
             Energy = playerModel.Energy.Value,
             Days = playerModel.Days.Value,
             Hours = playerModel.Hours.Value,
-            BankCards = playerModel.BankCards
+            BankCards = playerModel.BankCards,
+            WorkProgressList = new List<WorkProgressEntry>()
         };
-
+        foreach (var pair in playerModel.WorkProgressMap)
+        {
+            data.WorkProgressList.Add(new WorkProgressEntry
+            {
+                JobId = pair.Key,
+                Progress = pair.Value
+            });
+        }
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);
         Debug.Log("Player data saved:\n" + json);
@@ -41,6 +50,7 @@ public class PlayerDataManager
             return null;
         }
     }
+   
 
     /// <summary>
     /// Удаляет файл сохранений, сбрасывая данные.

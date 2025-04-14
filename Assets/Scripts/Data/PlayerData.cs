@@ -9,4 +9,11 @@ public class PlayerData
     public int Days;
     public int Hours;
     public List<BankCard> BankCards;
+    public List<WorkProgressEntry> WorkProgressList;
+}
+[System.Serializable]
+public class WorkProgressEntry
+{
+    public string JobId;
+    public float Progress;
 }

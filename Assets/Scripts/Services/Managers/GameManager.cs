@@ -29,12 +29,18 @@ public class GameManager : IInitializable
             PlayerModel.Days.Value = savedData.Days;
             PlayerModel.Hours.Value = savedData.Hours;
             PlayerModel.BankCards = savedData.BankCards ?? new List<BankCard>();
-
+            PlayerModel.WorkProgressMap = new Dictionary<string, float>();
+            if (savedData.WorkProgressList != null)
+            {
+                foreach (var entry in savedData.WorkProgressList)
+                {
+                    PlayerModel.WorkProgressMap[entry.JobId] = entry.Progress;
+                }
+            }
             Debug.Log($"[GameManager] Loaded saved data. Cash: {PlayerModel.Cash.Value}, Cards: {PlayerModel.BankCards.Count}");
         }
         else
         {
-            // Нет сохранения — создаём новую
             PlayerModel = new PlayerModel();
             Debug.Log("[GameManager] No saved data found. Using default values.");
         }
