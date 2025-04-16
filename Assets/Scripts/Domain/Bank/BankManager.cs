@@ -10,7 +10,6 @@ public class BankManager
     {
         _player = player;
 
-        // Если у игрока нет карт, создаём дефолтные банки/карты
         if (_player.BankCards.Count == 0)
         {
             _player.BankCards.Add(CreateBank("Kaspi"));
@@ -19,7 +18,6 @@ public class BankManager
         }
         else
         {
-            // Если карты есть, создаём соответствующие Bank-объекты
             foreach (var card in _player.BankCards)
             {
                 Bank existingBank = Banks.Find(b => b.Name == card.BankName);

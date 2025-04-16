@@ -13,6 +13,7 @@ public class PlayerModel
     public ReactiveProperty<float> Happiness { get; private set; }
     public ReactiveProperty<int> Days { get; private set; }
     public ReactiveProperty<int> Hours { get; private set; }
+    public StockPortfolio Portfolio { get; private set; }
 
     public List<BankCard> BankCards { get;  set; }
     public Dictionary<string, float> WorkProgressMap { get; set; }
@@ -25,7 +26,7 @@ public class PlayerModel
         Days = new ReactiveProperty<int>(1);
         Hours = new ReactiveProperty<int>(0);
         BankCards = new List<BankCard>();
-
+        Portfolio = new StockPortfolio();
         WorkProgressMap = new Dictionary<string, float>();
     }
 
