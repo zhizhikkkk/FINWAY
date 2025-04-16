@@ -22,7 +22,8 @@ public class PlayerDataManager
             Days = playerModel.Days.Value,
             Hours = playerModel.Hours.Value,
             BankCards = playerModel.BankCards,
-            WorkProgressList = new List<WorkProgressEntry>()
+            WorkProgressList = new List<WorkProgressEntry>(),
+            PortfolioList = new List<OwnedStockEntry>()
         };
         foreach (var pair in playerModel.WorkProgressMap)
         {
@@ -30,6 +31,16 @@ public class PlayerDataManager
             {
                 JobId = pair.Key,
                 Progress = pair.Value
+            });
+        }
+        var ownedStocks = playerModel.Portfolio.GetAllStocks();
+        foreach (var owned in ownedStocks)
+        {
+            data.PortfolioList.Add(new OwnedStockEntry
+            {
+                Symbol = owned.Symbol,
+                CompanyName = owned.CompanyName,
+                OwnedShares = owned.OwnedShares
             });
         }
         string json = JsonUtility.ToJson(data, true);

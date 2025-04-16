@@ -1,9 +1,7 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
 using Zenject;
-using Zenject.SpaceFighter;
 
 public class BankSelectionUI : MonoBehaviour
 {
@@ -11,13 +9,17 @@ public class BankSelectionUI : MonoBehaviour
     public Transform bankButtonContainer;
     public Button bankButtonPrefab;
 
-    // Панель, где показываем информацию о карте и кнопку "Перевести"
+    // Панель одной карты
     public GameObject singleCardPanel;
     public TextMeshProUGUI cardInfoText;
     public Button transferButton;
     public Button closeSingleCardPanelButton;
 
-    // Панель перевода (откуда -> куда -> сколько)
+    // КНОПКИ ДЛЯ "СНЯТЬ / ВНЕСТИ"
+    public Button withdrawButton;    // <-- новая
+    public Button depositButton;     // <-- новая
+
+    // Панель перевода (между картами)
     public GameObject transferPanel;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardNumber;
@@ -28,22 +30,33 @@ public class BankSelectionUI : MonoBehaviour
     public Button confirmTransferButton;
     public Button cancelTransferButton;
 
+    // Панель ввода суммы для Снятия
+    public GameObject withdrawPanel;
+    public TMP_InputField withdrawAmountInput;
+    public Button confirmWithdrawButton;
+    public Button cancelWithdrawButton;
+
+    // Панель ввода суммы для Внесения
+    public GameObject depositPanel;
+    public TMP_InputField depositAmountInput;
+    public Button confirmDepositButton;
+    public Button cancelDepositButton;
+
     private BankManager _bankManager;
     private PlayerModel _player;
     private BankTransferService _transferService;
     private Bank _selectedBank;
     private BankCard _selectedCard;
     private GameManager _gameManager;
-
-    private PlayerDataManager _dataManager; // Чтобы сохранять JSON
+    private PlayerDataManager _dataManager;
 
     [Inject]
     public void Construct(
         BankManager bankManager,
         PlayerModel player,
         BankTransferService transferService,
-        PlayerDataManager dataManager, 
-        GameManager gameManager ) 
+        PlayerDataManager dataManager,
+        GameManager gameManager)
     {
         _bankManager = bankManager;
         _player = player;
@@ -58,15 +71,29 @@ public class BankSelectionUI : MonoBehaviour
 
         singleCardPanel.SetActive(false);
         transferPanel.SetActive(false);
+        withdrawPanel.SetActive(false);
+        depositPanel.SetActive(false);
 
-        // Настраиваем кнопки перевода
         transferButton.onClick.AddListener(OnTransferButtonClicked);
         confirmTransferButton.onClick.AddListener(OnConfirmTransfer);
         cancelTransferButton.onClick.AddListener(() => transferPanel.SetActive(false));
         closeSingleCardPanelButton.onClick.AddListener(() => singleCardPanel.SetActive(false));
         toCardInput.onValueChanged.AddListener(OnCardNumberChanged);
+
+        // Новые кнопки
+        withdrawButton.onClick.AddListener(OnWithdrawClicked);
+        depositButton.onClick.AddListener(OnDepositClicked);
+
+        // Панель Withdraw
+        confirmWithdrawButton.onClick.AddListener(OnConfirmWithdraw);
+        cancelWithdrawButton.onClick.AddListener(() => withdrawPanel.SetActive(false));
+
+        // Панель Deposit
+        confirmDepositButton.onClick.AddListener(OnConfirmDeposit);
+        cancelDepositButton.onClick.AddListener(() => depositPanel.SetActive(false));
     }
 
+    // Генерируем кнопки по названию банков
     private void GenerateBankButtons()
     {
         foreach (string bankName in _bankManager.GetBankNames())
@@ -80,9 +107,7 @@ public class BankSelectionUI : MonoBehaviour
     private void OpenBank(string bankName)
     {
         _selectedBank = _bankManager.GetBank(bankName);
-       
 
-        // Так как у нас ровно 1 карта на банк, достаём её
         var cards = _selectedBank.GetPlayerCards();
         if (cards.Count > 0)
         {
@@ -90,12 +115,13 @@ public class BankSelectionUI : MonoBehaviour
             cardName.text = _selectedCard.BankName;
             string last4 = "*" + _selectedCard.CardNumber.Substring(_selectedCard.CardNumber.Length - 4);
             cardNumber.text = last4;
-            cardAmount.text = _selectedCard.Balance.ToString() + "$";
+            cardAmount.text = _selectedCard.Balance.ToString("F2") + "$";
 
             singleCardPanel.SetActive(true);
             transferPanel.SetActive(false);
+            withdrawPanel.SetActive(false);
+            depositPanel.SetActive(false);
 
-            // Обновляем UI
             cardInfoText.text = $"Карта банка {_selectedBank.Name}\n" +
                                 $"Номер: {_selectedCard.CardNumber}\n" +
                                 $"Баланс: {_selectedCard.Balance}\n";
@@ -109,39 +135,34 @@ public class BankSelectionUI : MonoBehaviour
 
     private void OnTransferButtonClicked()
     {
-        // Открываем панель перевода
         transferPanel.SetActive(true);
         toCardInput.text = "";
         amountInput.text = "";
     }
+
     private void OnCardNumberChanged(string input)
     {
-        // Если длина не 16, просто очищаем статус
         if (input.Length != 16)
         {
             statusText.text = "";
             return;
         }
 
-        // Ищем карту в списке всех карт игрока
         BankCard foundCard = _player.BankCards.Find(card => card.CardNumber == input);
-
         if (foundCard != null)
         {
-            // Проверяем, не совпадает ли она с исходной картой
             if (foundCard == _selectedCard)
             {
                 statusText.text = "Нельзя переводить на ту же карту!";
             }
             else
             {
-                // Выводим краткую информацию о карте-получателе
                 statusText.text = $"Карта получателя: {foundCard.BankName}";
             }
         }
         else
         {
-            statusText.text = "Такой карты не существует. Проверьте номер карты.";
+            statusText.text = "Такой карты не существует.";
         }
     }
 
@@ -149,35 +170,101 @@ public class BankSelectionUI : MonoBehaviour
     {
         string fromCardNumber = _selectedCard.CardNumber;
         string toCardNumber = toCardInput.text;
-        float amount = 0f;
-
+        float amount;
         if (!float.TryParse(amountInput.text, out amount))
         {
             Debug.Log("Invalid amount");
             return;
         }
-        
 
         bool success = _transferService.TransferMoney(fromCardNumber, toCardNumber, amount);
         if (success)
         {
-            // Успешный перевод → Сохраняем данные
             _dataManager.Save(_gameManager.PlayerModel);
-
-            // Обновляем UI
-            cardInfoText.text = $"Карта банка {_selectedBank.Name}\n" +
-                                $"Номер: {_selectedCard.CardNumber}\n" +
-                                $"Баланс: {_selectedCard.Balance}\n";
+            UpdateCardUI();
             Debug.Log("Transfer succeeded, data saved.");
         }
         else
         {
             Debug.Log("Transfer failed.");
         }
-
         transferPanel.SetActive(false);
     }
 
-    
+    // ====== НОВАЯ ЛОГИКА ДЛЯ WITHDRAW И DEPOSIT =======
 
+    private void OnWithdrawClicked()
+    {
+        // Открываем панель снятия
+        withdrawPanel.SetActive(true);
+        withdrawAmountInput.text = "";
+    }
+
+    private void OnConfirmWithdraw()
+    {
+        float amount;
+        if (!float.TryParse(withdrawAmountInput.text, out amount))
+        {
+            Debug.LogWarning("Invalid withdraw amount");
+            return;
+        }
+
+        // Снимаем с карты → в кэш
+        bool success = _transferService.WithdrawToCash(_selectedCard.CardNumber, amount);
+        if (success)
+        {
+            // Сохраняем
+            _dataManager.Save(_gameManager.PlayerModel);
+            UpdateCardUI();
+            Debug.Log("Withdraw success, data saved");
+        }
+        else
+        {
+            Debug.Log("Withdraw failed");
+        }
+        withdrawPanel.SetActive(false);
+    }
+
+    private void OnDepositClicked()
+    {
+        // Открываем панель внесения
+        depositPanel.SetActive(true);
+        depositAmountInput.text = "";
+    }
+
+    private void OnConfirmDeposit()
+    {
+        float amount;
+        if (!float.TryParse(depositAmountInput.text, out amount))
+        {
+            Debug.LogWarning("Invalid deposit amount");
+            return;
+        }
+
+        // Из кэша → на карту
+        bool success = _transferService.DepositFromCash(_selectedCard.CardNumber, amount);
+        if (success)
+        {
+            _dataManager.Save(_gameManager.PlayerModel);
+            UpdateCardUI();
+            Debug.Log("Deposit success, data saved");
+        }
+        else
+        {
+            Debug.Log("Deposit failed");
+        }
+        depositPanel.SetActive(false);
+    }
+
+    private void UpdateCardUI()
+    {
+        // Обновляем текст баланса и cardInfo
+        if (_selectedCard != null)
+        {
+            cardAmount.text = _selectedCard.Balance.ToString("F2") + "$";
+            cardInfoText.text = $"Карта банка {_selectedBank.Name}\n" +
+                                $"Номер: {_selectedCard.CardNumber}\n" +
+                                $"Баланс: {_selectedCard.Balance}\n";
+        }
+    }
 }

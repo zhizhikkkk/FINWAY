@@ -12,10 +12,18 @@ public class PlayerData
     public int Hours;
     public List<BankCard> BankCards;
     public List<WorkProgressEntry> WorkProgressList;
+    public List<OwnedStockEntry> PortfolioList;
 }
 [System.Serializable]
 public class WorkProgressEntry
 {
     public string JobId;
     public float Progress;
+}
+[System.Serializable]
+public class OwnedStockEntry
+{
+    public string Symbol;
+    public string CompanyName;
+    public int OwnedShares;
 }

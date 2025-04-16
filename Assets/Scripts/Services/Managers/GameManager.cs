@@ -39,6 +39,20 @@ public class GameManager : IInitializable
                     PlayerModel.WorkProgressMap[entry.JobId] = entry.Progress;
                 }
             }
+            if (savedData.PortfolioList != null)
+            {
+                //PlayerModel.Portfolio.Clear();
+                foreach (var ownedEntry in savedData.PortfolioList)
+                {
+                    PlayerModel.Portfolio.AddStock(
+                        ownedEntry.Symbol,
+                        ownedEntry.CompanyName,
+                        0f,
+                        ownedEntry.OwnedShares
+                    );
+                }
+            }
+
             Debug.Log($"[GameManager] Loaded saved data. Cash: {PlayerModel.Cash.Value}, Cards: {PlayerModel.BankCards.Count}");
         }
         else
