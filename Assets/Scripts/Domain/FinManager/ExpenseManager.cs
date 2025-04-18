@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System;
-
 public class ExpenseManager
 {
     private PlayerModel _playerModel;
 
     private float dailyFoodExpense = 20f;
     private float weeklyRentExpense = 200f;
-
     private int lastExpenseDate;
 
     public ExpenseManager(PlayerModel playerModel)
@@ -46,8 +44,6 @@ public class ExpenseManager
             Amount = dailyFoodExpense,
             Description = "Daily food expense"
         });
-
-      
     }
 
     private void DeductWeeklyExpenses(int day)
@@ -60,12 +56,24 @@ public class ExpenseManager
             Amount = weeklyRentExpense,
             Description = "Weekly rent and utilities"
         });
+
+        float totalWeeklyIncome = GetTotalIncomeForWeek(); 
+        float taxAmount = totalWeeklyIncome * 0.20f; 
+
+        _playerModel.Cash.Value -= taxAmount;
+        _playerModel.AddExpense(new ExpenseEntry
+        {
+            Date = day,
+            Category = "Tax",
+            Amount = taxAmount,
+            Description = "Weekly VAT (20% on income)"
+        });
     }
 
     public void AddTransportExpense(float amount)
     {
         _playerModel.Cash.Value -= amount;
-        _playerModel.ExpenseLog.Add(new ExpenseEntry
+        _playerModel.AddExpense(new ExpenseEntry
         {
             Date = _playerModel.Days.Value,
             Category = "Transport",
@@ -73,6 +81,24 @@ public class ExpenseManager
             Description = "Transport expense (between locations)"
         });
     }
+
+    
+    private float GetTotalIncomeForWeek()
+    {
+        float totalIncome = 0f;
+        int currentDay = _playerModel.Days.Value;
+
+        foreach (var income in _playerModel.IncomeLog)
+        {
+            if (currentDay - income.Date <= 7)
+            {
+                totalIncome += income.Amount;
+            }
+        }
+
+        return totalIncome;
+    }
+
 
     public List<ExpenseEntry> GetExpenseLog()
     {
@@ -88,6 +114,7 @@ public class ExpenseManager
         }
         return total;
     }
+
     public float GetTotalIncome()
     {
         float total = 0;

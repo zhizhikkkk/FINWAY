@@ -33,7 +33,6 @@ public class SleepManager : MonoBehaviour
 
     private void ToggleSleep()
     {
-        // Не даём заснуть, если энергия уже максимальная
         if (!isSleeping && playerModel.Energy.Value >= maxEnergy)
         {
             Debug.Log("Вы уже полностью отдохнули.");
