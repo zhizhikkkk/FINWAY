@@ -15,7 +15,8 @@ public class WorkLoopManager : MonoBehaviour
     [Header("Настройки работы")]
     [SerializeField] private float workCycleDuration = 3f;
     [SerializeField] private int moneyPerCycle = 50;
-    [SerializeField] private int energyCost = 5;
+    [SerializeField] private float energyCost = 5;
+    [SerializeField] private float happinessCost = 5;
     [SerializeField] private string jobId = "office";
     private Coroutine workCoroutine;
     private bool isWorking = false;
@@ -81,8 +82,8 @@ public class WorkLoopManager : MonoBehaviour
                     for (int i = 0; i < hoursToAdd; i++)
                     {
                         playerModel.AddHours(1);
-                        playerModel.ChangeHappiness(-2f);
-                        playerModel.ChangeEnergy(-5f);
+                        playerModel.ChangeHappiness(-happinessCost);
+                        playerModel.ChangeEnergy(-energyCost);
 
                         if (playerModel.Energy.Value < 5f)
                         {

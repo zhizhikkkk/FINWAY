@@ -88,6 +88,15 @@ public class ExpenseManager
         }
         return total;
     }
+    public float GetTotalIncome()
+    {
+        float total = 0;
+        foreach (var income in _playerModel.IncomeLog)
+        {
+            total += income.Amount;
+        }
+        return total;
+    }
 }
 
 

@@ -63,7 +63,7 @@ public class FinancialManagerUIController : MonoBehaviour
 
         expenseLogText.text = logText;
 
-        totalIncomeText.text = $"Total Income: {_playerModel.Cash.Value}$";
+        totalIncomeText.text = $"Total Income: {_expenseManager.GetTotalIncome()}$";
         totalExpenseText.text = $"Total Expenses: {_expenseManager.GetTotalExpenses()}$";
 
         var incomeLog = SummarizeLog(_playerModel.IncomeLog);

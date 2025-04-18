@@ -620,7 +620,8 @@ MonoBehaviour:
   progressFill: {fileID: 1192699489}
   workCycleDuration: 8
   moneyPerCycle: 50
-  energyCost: 1
+  energyCost: 0.5
+  happinessCost: 0.5
   jobId: office
 --- !u!4 &897366071
 Transform:
