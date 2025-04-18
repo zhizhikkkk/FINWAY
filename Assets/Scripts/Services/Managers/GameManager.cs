@@ -52,7 +52,13 @@ public class GameManager : IInitializable
                     );
                 }
             }
-
+            if (savedData.ExpenseLog != null)
+            {
+                foreach (var expense in savedData.ExpenseLog)
+                {
+                    PlayerModel.AddExpense(expense);
+                }
+            }
             Debug.Log($"[GameManager] Loaded saved data. Cash: {PlayerModel.Cash.Value}, Cards: {PlayerModel.BankCards.Count}");
         }
         else

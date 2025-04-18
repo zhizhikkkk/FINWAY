@@ -21,7 +21,7 @@ public class MapUIController : MonoBehaviour
     private PlayerLocationManager _locationManager;
     private PlayerModel _playerModel;
     private PlayerDataManager _playerDataManager;
-
+    private ExpenseManager _expenseManager;
     private string _targetLocation;
     private float _busCost;
     private float _walkCost;
@@ -29,11 +29,12 @@ public class MapUIController : MonoBehaviour
     private List<NodeData> _walkPath;
 
     [Inject]
-    public void Construct(PlayerLocationManager locationManager, PlayerModel playerModel, PlayerDataManager _dataManager)
+    public void Construct(PlayerLocationManager locationManager, PlayerModel playerModel, PlayerDataManager _dataManager, ExpenseManager expenseManage)
     {
         _locationManager = locationManager;
         _playerModel = playerModel;
         _playerDataManager = _dataManager;
+        _expenseManager = expenseManage;
         Debug.Log($"[MapUIController] Injected PlayerLocationManager: {_locationManager}");
     }
 
@@ -100,7 +101,7 @@ public class MapUIController : MonoBehaviour
         _playerModel.Cash.Value -= _busCost;
 
         _playerModel.RecalculateBudget();
-
+        _expenseManager.AddTransportExpense(_busCost);
         _playerDataManager.Save(_playerModel);
 
         _locationManager.SetLocation(_targetLocation);

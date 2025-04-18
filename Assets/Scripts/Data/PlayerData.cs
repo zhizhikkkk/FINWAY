@@ -13,6 +13,8 @@ public class PlayerData
     public List<BankCard> BankCards;
     public List<WorkProgressEntry> WorkProgressList;
     public List<OwnedStockEntry> PortfolioList;
+    public List<ExpenseEntry> ExpenseLog;
+
 }
 [System.Serializable]
 public class WorkProgressEntry

@@ -16,6 +16,7 @@ public class PlayerModel
     public StockPortfolio Portfolio { get; private set; }
 
     public List<BankCard> BankCards { get;  set; }
+    public List<ExpenseEntry> ExpenseLog { get; set; }
     public Dictionary<string, float> WorkProgressMap { get; set; }
     public PlayerModel()
     {
@@ -28,6 +29,7 @@ public class PlayerModel
         BankCards = new List<BankCard>();
         Portfolio = new StockPortfolio();
         WorkProgressMap = new Dictionary<string, float>();
+        ExpenseLog = new List<ExpenseEntry>();
     }
 
     public float GetWorkProgress(string jobId)
@@ -90,5 +92,9 @@ public class PlayerModel
     public void RemoveBankCard(BankCard card)
     {
         BankCards.Remove(card);
+    }
+    public void AddExpense(ExpenseEntry expense)
+    {
+        ExpenseLog.Add(expense);
     }
 }

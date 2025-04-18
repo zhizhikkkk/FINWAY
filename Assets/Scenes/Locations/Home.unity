@@ -967,7 +967,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219837944}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1219837946
 Camera:
   m_ObjectHideFlags: 0
@@ -1204,7 +1204,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggleWatchButton: {fileID: 48405280}
   buttonText: {fileID: 450666820}
-  happinessPerHour: 2
+  happinessPerHour: 1
+  energyPerHour: 1
 --- !u!1 &1746424037
 GameObject:
   m_ObjectHideFlags: 0

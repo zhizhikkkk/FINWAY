@@ -23,8 +23,10 @@ public class PlayerDataManager
             Hours = playerModel.Hours.Value,
             BankCards = playerModel.BankCards,
             WorkProgressList = new List<WorkProgressEntry>(),
-            PortfolioList = new List<OwnedStockEntry>()
+            PortfolioList = new List<OwnedStockEntry>(),
+            ExpenseLog = new List<ExpenseEntry>()
         };
+
         foreach (var pair in playerModel.WorkProgressMap)
         {
             data.WorkProgressList.Add(new WorkProgressEntry
@@ -33,6 +35,7 @@ public class PlayerDataManager
                 Progress = pair.Value
             });
         }
+
         var ownedStocks = playerModel.Portfolio.GetAllStocks();
         foreach (var owned in ownedStocks)
         {
@@ -42,6 +45,11 @@ public class PlayerDataManager
                 CompanyName = owned.CompanyName,
                 OwnedShares = owned.OwnedShares
             });
+        }
+
+        foreach (var expense in playerModel.ExpenseLog)
+        {
+            data.ExpenseLog.Add(expense); // Записываем расходы
         }
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);
@@ -62,11 +70,7 @@ public class PlayerDataManager
             return null;
         }
     }
-   
 
-    /// <summary>
-    /// Удаляет файл сохранений, сбрасывая данные.
-    /// </summary>
     public void ResetData()
     {
         if (File.Exists(filePath))
