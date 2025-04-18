@@ -50,12 +50,11 @@ public class PlayerDataManager
 
         foreach (var expense in playerModel.ExpenseLog)
         {
-            data.ExpenseLog.Add(expense); // Записываем расходы
+            data.ExpenseLog.Add(expense);
         }
         foreach (var income in playerModel.IncomeLog)
         {
-            // Добавляем данные о доходах
-            data.IncomeLog.Add(income);  // Записываем доходы
+            data.IncomeLog.Add(income);  
         }
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);
@@ -76,7 +75,28 @@ public class PlayerDataManager
             return null;
         }
     }
+    public void SaveDefaults()
+    {
+        var data = new PlayerData
+        {
+            Cash = 1000f,
+            Budget = 1000f,
+            Energy = 100f,
+            Happiness = 100f,
+            Days = 1,
+            Hours = 0,
 
+            BankCards = new List<BankCard>(),
+            WorkProgressList = new List<WorkProgressEntry>(),
+            PortfolioList = new List<OwnedStockEntry>(),
+            ExpenseLog = new List<ExpenseEntry>(),
+            IncomeLog = new List<IncomeEntry>()
+        };
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(filePath, json);
+        Debug.Log($"[PlayerDataManager] Defaults saved:\n{json}");
+    }
     public void ResetData()
     {
         if (File.Exists(filePath))

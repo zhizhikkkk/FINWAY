@@ -98,19 +98,18 @@ public class WorkLoopManager : MonoBehaviour
             progressFill.fillAmount = 0f;
             playerModel.SetWorkProgress(jobId, 0f);
 
-            // Добавляем доход в лог после каждого цикла работы
             float earnedAmount = moneyPerCycle;
             playerModel.Cash.Value += earnedAmount;
 
             IncomeEntry income = new IncomeEntry
             {
-                Date = playerModel.Days.Value,  // Текущая игровая дата
+                Date = playerModel.Days.Value, 
                 Amount = earnedAmount,
                 Description = "Income from work",
                 Category="Work"
             };
 
-            playerModel.AddIncome(income);  // Добавляем в IncomeLog
+            playerModel.AddIncome(income); 
 
         }
     }

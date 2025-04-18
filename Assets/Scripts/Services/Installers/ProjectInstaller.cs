@@ -14,7 +14,7 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<BankManager>().AsSingle().NonLazy();
         Container.Bind<BankTransferService>().AsSingle().NonLazy();
         Container.Bind<ExpenseManager>().AsSingle().NonLazy();
-
+        Container.Bind<ResetButtonHandler>().FromComponentInHierarchy().AsSingle();
 
 
     }

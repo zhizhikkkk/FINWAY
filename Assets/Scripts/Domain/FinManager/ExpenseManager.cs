@@ -7,70 +7,61 @@ public class ExpenseManager
 
     private float dailyFoodExpense = 20f;
     private float weeklyRentExpense = 200f;
-    private float dailyTransportExpense = 10f;
 
-    private DateTime lastExpenseDate;
+    private int lastExpenseDate;
 
     public ExpenseManager(PlayerModel playerModel)
     {
         _playerModel = playerModel;
-        lastExpenseDate = DateTime.Now;
+        lastExpenseDate = _playerModel.Days.Value;
     }
 
     public void UpdateExpenses()
     {
-        DateTime currentDate = DateTime.Now;
+        int currentDate = _playerModel.Days.Value;
 
-        // Если прошёл новый день
-        if (currentDate.Date > lastExpenseDate.Date)
+        if (currentDate > lastExpenseDate)
         {
-            DeductDailyExpenses();
-
-            if ((currentDate - lastExpenseDate).Days >= 7)
+            for (int day = lastExpenseDate + 1; day <= currentDate; day++)
             {
-                DeductWeeklyExpenses();
+                DeductDailyExpenses(day);
+
+                if ((day % 7) == 0)
+                {
+                    DeductWeeklyExpenses(day);
+                }
             }
 
-            lastExpenseDate = currentDate; // обновляем дату последнего расчёта
+            lastExpenseDate = currentDate;
         }
     }
 
-    private void DeductDailyExpenses()
+    private void DeductDailyExpenses(int day)
     {
         _playerModel.Cash.Value -= dailyFoodExpense;
         _playerModel.AddExpense(new ExpenseEntry
         {
-            Date = _playerModel.Days.Value,
+            Date = day,
             Category = "Food",
             Amount = dailyFoodExpense,
             Description = "Daily food expense"
         });
 
-        // Снять расходы на транспорт
-        _playerModel.Cash.Value -= dailyTransportExpense;
-        _playerModel.AddExpense(new ExpenseEntry
-        {
-            Date = _playerModel.Days.Value,
-            Category = "Transport",
-            Amount = dailyTransportExpense,
-            Description = "Daily transport expense"
-        });
+      
     }
 
-
-    private void DeductWeeklyExpenses()
+    private void DeductWeeklyExpenses(int day)
     {
         _playerModel.Cash.Value -= weeklyRentExpense;
-        _playerModel.ExpenseLog.Add(new ExpenseEntry
+        _playerModel.AddExpense(new ExpenseEntry
         {
-            Date = _playerModel.Days.Value,
+            Date = day,
             Category = "Rent",
             Amount = weeklyRentExpense,
             Description = "Weekly rent and utilities"
         });
     }
 
-    // Метод для добавления расходов на транспорт
     public void AddTransportExpense(float amount)
     {
         _playerModel.Cash.Value -= amount;
