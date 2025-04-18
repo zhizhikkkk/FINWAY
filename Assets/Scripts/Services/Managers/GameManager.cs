@@ -59,6 +59,13 @@ public class GameManager : IInitializable
                     PlayerModel.AddExpense(expense);
                 }
             }
+            if (savedData.IncomeLog != null)
+            {
+                foreach (var income in savedData.IncomeLog)
+                {
+                    PlayerModel.AddIncome(income);
+                }
+            }
             Debug.Log($"[GameManager] Loaded saved data. Cash: {PlayerModel.Cash.Value}, Cards: {PlayerModel.BankCards.Count}");
         }
         else

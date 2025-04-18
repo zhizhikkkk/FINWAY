@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using Zenject;
+using System;
 
 public class WorkLoopManager : MonoBehaviour
 {
@@ -85,7 +86,7 @@ public class WorkLoopManager : MonoBehaviour
 
                         if (playerModel.Energy.Value < 5f)
                         {
-                            ToggleWork(); 
+                            ToggleWork();
                             yield break;
                         }
                     }
@@ -97,9 +98,23 @@ public class WorkLoopManager : MonoBehaviour
             progressFill.fillAmount = 0f;
             playerModel.SetWorkProgress(jobId, 0f);
 
-            playerModel.Cash.Value += moneyPerCycle;
+            // Добавляем доход в лог после каждого цикла работы
+            float earnedAmount = moneyPerCycle;
+            playerModel.Cash.Value += earnedAmount;
+
+            IncomeEntry income = new IncomeEntry
+            {
+                Date = playerModel.Days.Value,  // Текущая игровая дата
+                Amount = earnedAmount,
+                Description = "Income from work",
+                Category="Work"
+            };
+
+            playerModel.AddIncome(income);  // Добавляем в IncomeLog
+
         }
     }
+
 
 
 

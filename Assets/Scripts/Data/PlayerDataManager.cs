@@ -24,7 +24,8 @@ public class PlayerDataManager
             BankCards = playerModel.BankCards,
             WorkProgressList = new List<WorkProgressEntry>(),
             PortfolioList = new List<OwnedStockEntry>(),
-            ExpenseLog = new List<ExpenseEntry>()
+            ExpenseLog = new List<ExpenseEntry>(),
+            IncomeLog = new List<IncomeEntry>()
         };
 
         foreach (var pair in playerModel.WorkProgressMap)
@@ -50,6 +51,11 @@ public class PlayerDataManager
         foreach (var expense in playerModel.ExpenseLog)
         {
             data.ExpenseLog.Add(expense); // Записываем расходы
+        }
+        foreach (var income in playerModel.IncomeLog)
+        {
+            // Добавляем данные о доходах
+            data.IncomeLog.Add(income);  // Записываем доходы
         }
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);

@@ -14,6 +14,7 @@ public class PlayerData
     public List<WorkProgressEntry> WorkProgressList;
     public List<OwnedStockEntry> PortfolioList;
     public List<ExpenseEntry> ExpenseLog;
+    public List<IncomeEntry> IncomeLog;
 
 }
 [System.Serializable]

@@ -1,6 +1,7 @@
 using UniRx;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class PlayerModel
@@ -17,6 +18,7 @@ public class PlayerModel
 
     public List<BankCard> BankCards { get;  set; }
     public List<ExpenseEntry> ExpenseLog { get; set; }
+    public List<IncomeEntry> IncomeLog { get; set; }
     public Dictionary<string, float> WorkProgressMap { get; set; }
     public PlayerModel()
     {
@@ -30,6 +32,7 @@ public class PlayerModel
         Portfolio = new StockPortfolio();
         WorkProgressMap = new Dictionary<string, float>();
         ExpenseLog = new List<ExpenseEntry>();
+        IncomeLog = new List<IncomeEntry>();
     }
 
     public float GetWorkProgress(string jobId)
@@ -97,4 +100,16 @@ public class PlayerModel
     {
         ExpenseLog.Add(expense);
     }
+    public void AddIncome(IncomeEntry income)
+    {
+        IncomeLog.Add(income);
+    }
+}
+[System.Serializable]
+public class IncomeEntry
+{
+    public int Date;     
+    public float Amount;       
+    public string Description;  
+    public string Category;
 }

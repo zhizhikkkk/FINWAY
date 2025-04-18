@@ -40,7 +40,7 @@ public class ExpenseManager
         _playerModel.Cash.Value -= dailyFoodExpense;
         _playerModel.AddExpense(new ExpenseEntry
         {
-            Date = DateTime.Now,
+            Date = _playerModel.Days.Value,
             Category = "Food",
             Amount = dailyFoodExpense,
             Description = "Daily food expense"
@@ -50,7 +50,7 @@ public class ExpenseManager
         _playerModel.Cash.Value -= dailyTransportExpense;
         _playerModel.AddExpense(new ExpenseEntry
         {
-            Date = DateTime.Now,
+            Date = _playerModel.Days.Value,
             Category = "Transport",
             Amount = dailyTransportExpense,
             Description = "Daily transport expense"
@@ -63,7 +63,7 @@ public class ExpenseManager
         _playerModel.Cash.Value -= weeklyRentExpense;
         _playerModel.ExpenseLog.Add(new ExpenseEntry
         {
-            Date = DateTime.Now,
+            Date = _playerModel.Days.Value,
             Category = "Rent",
             Amount = weeklyRentExpense,
             Description = "Weekly rent and utilities"
@@ -76,7 +76,7 @@ public class ExpenseManager
         _playerModel.Cash.Value -= amount;
         _playerModel.ExpenseLog.Add(new ExpenseEntry
         {
-            Date = DateTime.Now,
+            Date = _playerModel.Days.Value,
             Category = "Transport",
             Amount = amount,
             Description = "Transport expense (between locations)"
@@ -103,7 +103,7 @@ public class ExpenseManager
 [System.Serializable]
 public class ExpenseEntry
 {
-    public DateTime Date;
+    public int Date;
     public string Category;
     public float Amount;
     public string Description;
