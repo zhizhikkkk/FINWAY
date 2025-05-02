@@ -8,7 +8,7 @@ public class StockDetailPanel : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text currentPriceText;
-    [SerializeField] private LineChart lineChart;
+    [SerializeField] private WindowGraph windowGraph;
     [SerializeField] private TMP_InputField quantityInput;
     [SerializeField] private Button buyButton;
     [SerializeField] private Button sellButton;
@@ -16,13 +16,13 @@ public class StockDetailPanel : MonoBehaviour
 
     private Stock currentStock;
     private StockMarketManager manager;
-    private PlayerModel player; // <-- добавим ссылку на PlayerModel
+    private PlayerModel player;
 
     [Inject]
     public void Construct(StockMarketManager managerRef, PlayerModel playerRef)
     {
         manager = managerRef;
-        player = playerRef; // запоминаем player
+        player = playerRef; 
     }
 
     private void Awake()
@@ -43,9 +43,9 @@ public class StockDetailPanel : MonoBehaviour
         currentPriceText.text = $"${stock.CurrentPrice:F2}";
 
         gameObject.SetActive(true);
-        if (lineChart && stock.PriceHistory != null && stock.PriceHistory.Count > 0)
+        if (windowGraph && stock.PriceHistory != null && stock.PriceHistory.Count > 0)
         {
-            lineChart.ShowData(stock.PriceHistory);
+            windowGraph.ShowGraph(stock.PriceHistory);
         }
     }
 
