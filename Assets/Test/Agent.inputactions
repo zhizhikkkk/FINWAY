@@ -1,0 +1,34 @@
+{
+    "name": "Agent",
+    "maps": [
+        {
+            "name": "AgentMovement",
+            "id": "4e01997f-a96d-4949-a47f-ef61eb6a42d7",
+            "actions": [
+                {
+                    "name": "Movement",
+                    "type": "Button",
+                    "id": "c83970a9-da84-40ed-9a05-5d1fe4cc3340",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "595b2ddc-3bf0-49ab-acca-bebc4411aa5e",
+                    "path": "<Pointer>/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

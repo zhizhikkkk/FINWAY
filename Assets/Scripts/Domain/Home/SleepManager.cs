@@ -6,9 +6,9 @@ using Zenject;
 
 public class SleepManager : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private Button toggleSleepButton;
-    [SerializeField] private TextMeshProUGUI buttonText;
+    //[Header("UI")]
+    //[SerializeField] private Button toggleSleepButton;
+    //[SerializeField] private TextMeshProUGUI buttonText;
 
     [Header("Настройки сна")]
     [SerializeField] private float energyPerHour = 2f;
@@ -27,11 +27,11 @@ public class SleepManager : MonoBehaviour
 
     private void Start()
     {
-        toggleSleepButton.onClick.AddListener(ToggleSleep);
-        UpdateButtonText();
+        //toggleSleepButton.onClick.AddListener(ToggleSleep);
+       // UpdateButtonText();
     }
 
-    private void ToggleSleep()
+    public void ToggleSleep()
     {
         if (!isSleeping && playerModel.Energy.Value >= maxEnergy)
         {
@@ -50,7 +50,7 @@ public class SleepManager : MonoBehaviour
             StopSleeping();
         }
 
-        UpdateButtonText();
+       // UpdateButtonText();
     }
 
     private IEnumerator SleepLoop()
@@ -97,11 +97,11 @@ public class SleepManager : MonoBehaviour
             sleepRoutine = null;
         }
 
-        UpdateButtonText();
+        //UpdateButtonText();
     }
 
-    private void UpdateButtonText()
-    {
-        buttonText.text = isSleeping ? "Wake up" : "Sleep";
-    }
+    //private void UpdateButtonText()
+    //{
+    //    buttonText.text = isSleeping ? "Wake up" : "Sleep";
+    //}
 }
