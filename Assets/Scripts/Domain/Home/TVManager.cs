@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using Zenject;
@@ -7,85 +6,77 @@ using Zenject;
 public class TVManager : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private Button toggleWatchButton;
-    [SerializeField] private TextMeshProUGUI buttonText;
+    [SerializeField] TextMeshProUGUI tvText;
 
-    [Header("Настройки просмотра")]
-    [SerializeField] private float happinessPerHour = 2f;
-    [SerializeField] private float energyPerHour = 1f;
+    [Header("Баланс")]
+    [SerializeField] float happinessPerHour = 2f;
+    [SerializeField] float energyPerHour = 1f;
+    [SerializeField] float stopDistance = 0.3f;  
+    [SerializeField] float realSecPerGameHour = 8f;     
+     
 
-    private bool isWatching = false;
-    private Coroutine watchRoutine;
-    private PlayerModel playerModel;
+    PlayerModel _player;
+    Transform _viewer;        
+    Coroutine _loop;
+    bool _watching;
+    float _timer;
 
-    [Inject]
-    public void Construct(PlayerModel model)
+    public bool IsWatching => _watching;
+
+    [Inject] void Construct(PlayerModel model) => _player = model;
+
+    public void StartWatching(Transform viewer)
     {
-        playerModel = model;
+
+        if (_watching) return;
+        Debug.Log("Начал смотреть");
+        _viewer = viewer;
+        _watching = true;
+        _timer = 0f;
+        _loop = StartCoroutine(WatchLoop());
+
+        UpdateUi();
     }
 
-    private void Start()
+    public void StopWatching()
     {
-        toggleWatchButton.onClick.AddListener(ToggleWatch);
-        UpdateButtonText();
+        if (!_watching) return;
+        Debug.Log("Zakonchil смотреть");
+        _watching = false;
+        if (_loop != null) StopCoroutine(_loop);
+        _loop = null;
+
+        UpdateUi();
     }
 
-    private void ToggleWatch()
+    IEnumerator WatchLoop()
     {
-        isWatching = !isWatching;
-
-        if (isWatching)
+        while (_watching)
         {
-            watchRoutine = StartCoroutine(WatchTV());
-        }
-        else
-        {
-            StopWatching();
-        }
-
-        UpdateButtonText();
-    }
-
-    private IEnumerator WatchTV()
-    {
-        float timer = 0f;
-
-        while (isWatching)
-        {
-            timer += Time.deltaTime;
-
-            if (timer >= 1f)
+            Debug.Log(Vector3.Distance(_viewer.position, transform.position));
+            if (Vector3.Distance(_viewer.position, transform.position) > stopDistance)
             {
-                int hours = Mathf.FloorToInt(timer);
-                timer -= hours;
-
-                for (int i = 0; i < hours; i++)
-                {
-                    playerModel.AddHours(1);
-                    playerModel.ChangeHappiness(happinessPerHour);
-                    playerModel.ChangeHappiness(energyPerHour);
-                }
+                StopWatching();
+                UpdateUi();
+                yield break;
             }
 
-            yield return null;
+            _timer += Time.unscaledDeltaTime;
+            if (_timer >= realSecPerGameHour)
+            {
+                _timer -= realSecPerGameHour;
+
+                _player.AddHours(1);
+                _player.ChangeHappiness(happinessPerHour);
+                _player.ChangeEnergy(-energyPerHour);
+            }
+            UpdateUi();
+            yield return null;  
         }
     }
 
-    private void StopWatching()
-    {
-        isWatching = false;
+    void UpdateUi() =>
+        tvText.text = _watching ? "Watching TV" : "";
 
-        if (watchRoutine != null)
-        {
-            StopCoroutine(watchRoutine);
-            watchRoutine = null;
-        }
-
-        UpdateButtonText();
-    }
-
-    private void UpdateButtonText()
-    {
-        buttonText.text = isWatching ? "Stop Watching" : "Watch TV";
-    }
+    void OnDestroy() => StopWatching();
 }

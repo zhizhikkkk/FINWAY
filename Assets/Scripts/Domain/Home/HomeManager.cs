@@ -3,29 +3,42 @@ using Zenject;
 
 public class HomeManager : MonoBehaviour
 {
-    public SleepManager sleepManager;
-    public TVManager tvManager;
+    [SerializeField] SleepManager sleepManager;
+    [SerializeField] TVManager tvManager;
+
     [Inject] SignalBus _bus;
 
-    void OnEnable() => _bus.Subscribe<AgentInteractionSignal>(OnInteract);
-    void OnDisable() => _bus.Unsubscribe<AgentInteractionSignal>(OnInteract);
+    void OnEnable()
+    {
+        _bus.Subscribe<AgentInteractionSignal>(OnInteract);
+        AgentMovement.OnNewTarget += OnNewTarget;
+    }
+
+    void OnDisable()
+    {
+        _bus.Unsubscribe<AgentInteractionSignal>(OnInteract);
+        AgentMovement.OnNewTarget -= OnNewTarget;
+    }
 
     void OnInteract(AgentInteractionSignal sig)
     {
         switch (sig.Target.tag)
         {
-            case "TV": OpenTvMenu(); break;
-            case "Bed": StartSleeping(); break;
+            case "TV":
+                tvManager.StartWatching(sig.Agent.transform);
+                break;
+
+            case "Bed":
+                sleepManager.StartSleeping(sig.Agent.transform);
+                break;
         }
     }
+    void OnNewTarget(GameObject target)
+    {
+        if (tvManager.IsWatching && (target == null || target.tag != "TV"))
+            tvManager.StopWatching();
 
-    void OpenTvMenu() 
-    {
-        Debug.Log("TV");
-    }
-    void StartSleeping()
-    {
-        Debug.Log("Sleep");
-        //sleepManager.ToggleSleep();
+        if (sleepManager.IsSleeping && (target == null || target.tag != "Bed"))
+            sleepManager.StopSleeping();
     }
 }

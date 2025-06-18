@@ -1,107 +1,81 @@
-using UnityEngine;
-using UnityEngine.UI;
+п»їusing System.Collections;
 using TMPro;
-using System.Collections;
+using UnityEngine;
 using Zenject;
 
 public class SleepManager : MonoBehaviour
 {
-    //[Header("UI")]
-    //[SerializeField] private Button toggleSleepButton;
-    //[SerializeField] private TextMeshProUGUI buttonText;
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI sleepText;
+    [Header("Р‘Р°Р»Р°РЅСЃ СЃРЅР°")]
+    [SerializeField] float energyPerHour = 2f;
+    [SerializeField] float happinessPerHour = 10f;
+    [SerializeField] float stopDistance = 13f;   
+    [SerializeField] float realSecPerGameHour = 3f;     
+    [SerializeField] float maxEnergy;
 
-    [Header("Настройки сна")]
-    [SerializeField] private float energyPerHour = 2f;
-    [SerializeField] private float maxEnergy = 100f;
-    [SerializeField] private float happinessPerHour = 10f;
+    PlayerModel _player;
+    [Inject] void Construct(PlayerModel model) => _player = model;
 
-    private bool isSleeping = false;
-    private Coroutine sleepRoutine;
-    private PlayerModel playerModel;
+    public bool IsSleeping => _sleeping;
+    bool _sleeping;
+    Transform _sleeper;         
+    Coroutine _loop;
+    float _timer;
 
-    [Inject]
-    public void Construct(PlayerModel model)
+    public void StartSleeping(Transform sleeper)
     {
-        playerModel = model;
+        if (_sleeping || _player.Energy.Value >= maxEnergy) return;
+
+        _sleeper = sleeper;
+        _sleeping = true;
+        _timer = 0f;
+        _loop = StartCoroutine(SleepLoop());
+        UpdateUi();
     }
 
-    private void Start()
+    public void StopSleeping()
     {
-        //toggleSleepButton.onClick.AddListener(ToggleSleep);
-       // UpdateButtonText();
+        if (!_sleeping) return;
+
+        _sleeping = false;
+        if (_loop != null) StopCoroutine(_loop);
+        _loop = null;
+        UpdateUi();
     }
 
-    public void ToggleSleep()
+    IEnumerator SleepLoop()
     {
-        if (!isSleeping && playerModel.Energy.Value >= maxEnergy)
+        while (_sleeping)
         {
-            Debug.Log("Вы уже полностью отдохнули.");
-            return;
-        }
-
-        isSleeping = !isSleeping;
-
-        if (isSleeping)
-        {
-            sleepRoutine = StartCoroutine(SleepLoop());
-        }
-        else
-        {
-            StopSleeping();
-        }
-
-       // UpdateButtonText();
-    }
-
-    private IEnumerator SleepLoop()
-    {
-        float timer = 0f;
-
-        while (isSleeping)
-        {
-            timer += Time.deltaTime;
-
-            if (timer >= 1f)
+            if (Vector3.Distance(_sleeper.position, transform.position) > stopDistance)
             {
-                int hours = Mathf.FloorToInt(timer);
-                timer -= hours;
-
-                for (int i = 0; i < hours; i++)
-                {
-                    if (playerModel.Energy.Value < maxEnergy)
-                    {
-                        playerModel.AddHours(1);
-                        playerModel.ChangeEnergy(energyPerHour);
-                        playerModel.ChangeHappiness(happinessPerHour);
-                    }
-                    else
-                    {
-                        Debug.Log("Энергия достигла максимума — пробуждение.");
-                        StopSleeping(); // Автоматическое пробуждение
-                        yield break;
-                    }
-                }
+                StopSleeping();
+                UpdateUi();
+                yield break;
             }
 
+            _timer += Time.unscaledDeltaTime;
+            if (_timer >= realSecPerGameHour)
+            {
+                _timer -= realSecPerGameHour;
+
+                _player.AddHours(1);
+                _player.ChangeEnergy(energyPerHour);
+                _player.ChangeHappiness(happinessPerHour);
+
+                if (_player.Energy.Value >= maxEnergy)
+                {
+                    _player.Energy.Value = maxEnergy;
+                    StopSleeping();
+                    yield break;
+                }
+            }
+            UpdateUi();
             yield return null;
         }
     }
-
-    private void StopSleeping()
-    {
-        isSleeping = false;
-
-        if (sleepRoutine != null)
-        {
-            StopCoroutine(sleepRoutine);
-            sleepRoutine = null;
-        }
-
-        //UpdateButtonText();
-    }
-
-    //private void UpdateButtonText()
-    //{
-    //    buttonText.text = isSleeping ? "Wake up" : "Sleep";
-    //}
+    void UpdateUi() =>
+        sleepText.text = _sleeping ? "Sleeping" : "";
+    void OnDestroy() => StopSleeping();
 }
