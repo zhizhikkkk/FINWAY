@@ -6,6 +6,7 @@ using Zenject;
 public class ResetButtonHandler : MonoBehaviour
 {
     [Inject] private PlayerDataManager _dataManager;
+    [Inject] PlayerModel _playerModel;
 
     private Button _button;
 
@@ -17,7 +18,10 @@ public class ResetButtonHandler : MonoBehaviour
 
     private void OnResetClicked()
     {
-        _dataManager.SaveDefaults();
+        _dataManager.ResetData();
+        _playerModel.ResetToDefaults();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+       
     }
 }

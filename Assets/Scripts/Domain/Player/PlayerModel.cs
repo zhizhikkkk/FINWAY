@@ -1,10 +1,10 @@
-using UniRx;
+﻿using UniRx;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 [System.Serializable]
-public class PlayerModel
+public partial class PlayerModel
 {
     public ReactiveProperty<float> Cash { get; private set; }
     public ReactiveProperty<float> Budget { get; private set; }
@@ -104,6 +104,22 @@ public class PlayerModel
     {
         IncomeLog.Add(income);
     }
+    public void ResetToDefaults()
+    {
+        Cash.Value = 1000f;
+        Budget.Value = 1000f;
+        Energy.Value = 100f;
+        Happiness.Value = 100f;
+        Days.Value = 1;
+        Hours.Value = 0;
+
+        BankCards.Clear();
+        Portfolio.Clear();                
+        WorkProgressMap.Clear();
+        ExpenseLog.Clear();
+        IncomeLog.Clear();
+    }
+
 }
 [System.Serializable]
 public class IncomeEntry
@@ -113,3 +129,5 @@ public class IncomeEntry
     public string Description;  
     public string Category;
 }
+
+
