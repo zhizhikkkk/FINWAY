@@ -40,12 +40,15 @@ public class AgentMovement : MonoBehaviour
 
     void Update()
     {
-        if (click.WasPressedThisFrame() &&
-            !EventSystem.current.IsPointerOverGameObject(Mouse.current.deviceId))
+        //if (click.WasPressedThisFrame() &&
+        //    !EventSystem.current.IsPointerOverGameObject(Mouse.current.deviceId))
+        //{
+        //    HandleClick();
+        //}
+        if (click.WasPressedThisFrame() )
         {
             HandleClick();
         }
-
         if (awaiting &&
             !agent.pathPending &&
             agent.pathStatus == NavMeshPathStatus.PathComplete &&
