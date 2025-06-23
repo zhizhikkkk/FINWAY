@@ -42,24 +42,24 @@ public class HUDView : MonoBehaviour
 
     private void UpdateCash(float value)
     {
-        cashText.text = $"Cash: {value}";
+        cashText.text = $"{value}";
     }
 
     private void UpdateBudget(float value)
     {
-        budgetText.text = $"Budget: {value}";
+        budgetText.text = $"{value}";
     }
 
     private void UpdateEnergy(float value)
     {
-        energyText.text = $"Energy: {value}";
+        energyText.text = $"{value}";
     }
     private void UpdateHappiness(float value)
     {
-        happinessText.text = $"Happiness: {Mathf.RoundToInt(value)}";
+        happinessText.text = $"{Mathf.RoundToInt(value)}";
     }
     private void UpdateTime()
     {
-        timeText.text = $"Time: Day {_playerModel.Days.Value}, Hour {_playerModel.Hours.Value}";
+        timeText.text = $"{_playerModel.Days.Value}d,{_playerModel.Hours.Value}h";
     }
 }

@@ -22,6 +22,7 @@ public class HomeManager : MonoBehaviour
 
     void OnInteract(AgentInteractionSignal sig)
     {
+        Debug.Log("Home");
         switch (sig.Target.tag)
         {
             case "TV":

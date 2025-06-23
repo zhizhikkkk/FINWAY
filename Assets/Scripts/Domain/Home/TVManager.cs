@@ -41,7 +41,6 @@ public class TVManager : MonoBehaviour
     public void StopWatching()
     {
         if (!_watching) return;
-        Debug.Log("Zakonchil смотреть");
         _watching = false;
         if (_loop != null) StopCoroutine(_loop);
         _loop = null;
@@ -53,7 +52,6 @@ public class TVManager : MonoBehaviour
     {
         while (_watching)
         {
-            Debug.Log(Vector3.Distance(_viewer.position, transform.position));
             if (Vector3.Distance(_viewer.position, transform.position) > stopDistance)
             {
                 StopWatching();

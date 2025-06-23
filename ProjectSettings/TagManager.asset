@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TV
   - Bed
+  - SlotMachine
   layers:
   - Default
   - TransparentFX

@@ -65,10 +65,9 @@ public class AgentMovement : MonoBehaviour
         Vector3 m = Mouse.current.position.ReadValue();
         m.z = -cam.transform.position.z;
         var world = cam.ScreenToWorldPoint(m); world.z = 0;
-
+        
         var hit = Physics2D.OverlapPoint(world, interactMask);
         interactObj = hit ? hit.gameObject : null;
-
         if (hit)                                
         {
             world = hit.ClosestPoint(world); 
@@ -78,7 +77,6 @@ public class AgentMovement : MonoBehaviour
         {
             awaiting = false;
         }
-
         if (NavMesh.SamplePosition(world, out var navHit, sampleRadius, NavMesh.AllAreas))
         {
             agent.SetDestination(navHit.position);
