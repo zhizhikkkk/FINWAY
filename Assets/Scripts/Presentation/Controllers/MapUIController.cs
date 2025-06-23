@@ -11,9 +11,6 @@ public class MapUIController : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject choosePanel;
     [SerializeField] private TMP_Text infoText;
-    [SerializeField] private Button moneyButton;
-    [SerializeField] private Button timeButton;
-    [SerializeField] private Button exitButton;
 
     [Header("Graph Data")]
     [SerializeField] private LocationGraph locationGraph;
@@ -57,9 +54,6 @@ public class MapUIController : MonoBehaviour
             ProjectContext.Instance.Container.Inject(this);
         }
 
-        moneyButton.onClick.AddListener(OnMoneyConfirm);
-        timeButton.onClick.AddListener(OnTimeConfirm);
-        exitButton.onClick.AddListener(OnExitClicked);
     }
 
     private void Start()
@@ -119,8 +113,9 @@ public class MapUIController : MonoBehaviour
         choosePanel.SetActive(true);
     }
 
-    private void OnMoneyConfirm()
+    public void OnMoneyConfirm()
     {
+        Debug.Log("Suka");
         if (_busCost == float.MaxValue)
         {
             Debug.Log("Нет автобусного маршрута!");
@@ -141,7 +136,7 @@ public class MapUIController : MonoBehaviour
         SceneManager.LoadScene(_targetLocation);
     }
 
-    private void OnTimeConfirm()
+    public void OnTimeConfirm()
     {
         if (_walkCost == float.MaxValue)
         {
@@ -156,7 +151,7 @@ public class MapUIController : MonoBehaviour
         SceneManager.LoadScene(_targetLocation);
     }
 
-    private void OnExitClicked()
+    public void OnExitClicked()
     {
         choosePanel.SetActive(false);
     }

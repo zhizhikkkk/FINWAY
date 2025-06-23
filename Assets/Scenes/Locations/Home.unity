@@ -741,7 +741,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 626febf29de29964e8cb4a9a01f78599, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1067,6 +1067,7 @@ GameObject:
   - component: {fileID: 1413261192}
   - component: {fileID: 1413261195}
   - component: {fileID: 1413261194}
+  - component: {fileID: 1413261196}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -1233,6 +1234,30 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1413261196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413261189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cacbeb03690624ead1bda58a73beaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editableData:
+    Cash: 0
+    Budget: 0
+    Energy: 0
+    Happiness: 0
+    Days: 0
+    Hours: 0
+    BankCards: []
+    WorkProgressList: []
+    PortfolioList: []
+    ExpenseLog: []
+    IncomeLog: []
 --- !u!1 &1420609297
 GameObject:
   m_ObjectHideFlags: 0
