@@ -20,6 +20,9 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<BankTransferService>().AsSingle().NonLazy();
         Container.Bind<ExpenseManager>().AsSingle().NonLazy();
         Container.Bind<ResetButtonHandler>().FromComponentInHierarchy().AsSingle();
+        Container.BindInterfacesAndSelfTo<DayNightService>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<LocationAvailabilityService>().AsSingle().NonLazy();
+
         //Container.Bind<CasinoManager>().FromComponentInHierarchy().AsSingle();
         /* --------------------------------------------------- */
         /*  Signals                                            */

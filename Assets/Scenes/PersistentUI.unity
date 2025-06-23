@@ -3764,6 +3764,9 @@ MonoBehaviour:
   energyText: {fileID: 1983560293}
   timeText: {fileID: 1631606229}
   happinessText: {fileID: 1996054733}
+  dayNightIcon: {fileID: 396471122}
+  sunSprite: {fileID: 856110100, guid: ec9a02fffcd08454a9158bd08a94b6d8, type: 3}
+  moonSprite: {fileID: 21300000, guid: 3edffa6db2d0db34ea1d35fc98cb0638, type: 3}
 --- !u!114 &1909594990
 MonoBehaviour:
   m_ObjectHideFlags: 0

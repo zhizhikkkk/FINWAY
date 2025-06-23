@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UniRx;
 using Zenject;
+using UnityEngine.UI;
 
 public class HUDView : MonoBehaviour
 {
@@ -14,8 +15,13 @@ public class HUDView : MonoBehaviour
     private PlayerModel _playerModel;
     private CompositeDisposable _disposables = new CompositeDisposable();
 
+
+
+    public Image dayNightIcon;
+    public Sprite sunSprite;
+    public Sprite moonSprite;
     [Inject]
-    public void Construct(PlayerModel playerModel)
+    public void Construct(PlayerModel playerModel, DayNightService dayNight)
     {
         _playerModel = playerModel;
         _playerModel.Cash.Subscribe(UpdateCash).AddTo(_disposables);
@@ -24,6 +30,12 @@ public class HUDView : MonoBehaviour
         _playerModel.Days.Subscribe(_ => UpdateTime()).AddTo(_disposables);
         _playerModel.Hours.Subscribe(_ => UpdateTime()).AddTo(_disposables);
         _playerModel.Happiness.Subscribe(UpdateHappiness).AddTo(_disposables);
+
+        dayNight.CurrentPeriod.Subscribe(p =>
+        {
+            dayNightIcon.sprite = (p == DayPeriod.Day) ? sunSprite : moonSprite;
+        })
+        .AddTo(_disposables);
     }
 
     private void Start()
