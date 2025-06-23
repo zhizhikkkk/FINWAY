@@ -661,7 +661,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &78844605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2409,12 +2409,6 @@ MonoBehaviour:
   moneyButton: {fileID: 500864096}
   timeButton: {fileID: 73262840}
   exitButton: {fileID: 881598523}
-  homeButton: {fileID: 1402332749}
-  bankButton: {fileID: 305831246}
-  casinoButton: {fileID: 16019331}
-  birzhaButton: {fileID: 654233434}
-  workButton: {fileID: 1222521622}
-  cryptoLabButton: {fileID: 1979141018}
   locationGraph: {fileID: 11400000, guid: 75ad76133bda5914ba5783a77c7c5111, type: 2}
 --- !u!1 &1402332747
 GameObject:
