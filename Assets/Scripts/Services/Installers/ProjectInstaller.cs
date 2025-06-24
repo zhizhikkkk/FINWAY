@@ -22,13 +22,16 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<ResetButtonHandler>().FromComponentInHierarchy().AsSingle();
         Container.BindInterfacesAndSelfTo<DayNightService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<LocationAvailabilityService>().AsSingle().NonLazy();
+       
+        Container.BindInterfacesTo<RandomEventManager>().AsSingle().NonLazy();
+     
 
-        //Container.Bind<CasinoManager>().FromComponentInHierarchy().AsSingle();
-        /* --------------------------------------------------- */
-        /*  Signals                                            */
-        /* --------------------------------------------------- */
+    //Container.Bind<CasinoManager>().FromComponentInHierarchy().AsSingle();
+    /* --------------------------------------------------- */
+    /*  Signals                                            */
+    /* --------------------------------------------------- */
 
-        SignalBusInstaller.Install(Container);                 
+    SignalBusInstaller.Install(Container);                 
         Container.DeclareSignal<AgentInteractionSignal>();
     }
 }
