@@ -26,7 +26,7 @@ public class RandomEventManager : IInitializable, IDisposable
                 _player.AddExpense(new ExpenseEntry
                 {
                     Date = _player.Days.Value,
-                    Category = "Random Event",
+                    Category = "Random Event(Ремонт кофемашины)",
                     Amount = cost,
                     Description = "Ремонт кофемашины"
                 });
@@ -45,7 +45,7 @@ public class RandomEventManager : IInitializable, IDisposable
                 _player.AddIncome(new IncomeEntry
                 {
                     Date = _player.Days.Value,
-                    Category = "Random Event",
+                    Category = "Random Event(Нашёл деньги на улице)",
                     Amount = gain,
                     Description = "Нашёл деньги на улице"
                 });
@@ -64,7 +64,7 @@ public class RandomEventManager : IInitializable, IDisposable
                 _player.AddExpense(new ExpenseEntry
                 {
                     Date = _player.Days.Value,
-                    Category = "Random Event",
+                    Category = "Random Event(Штраф ГИБДД)",
                     Amount = fine,
                     Description = "Штраф ГИБДД"
                 });
@@ -83,7 +83,7 @@ public class RandomEventManager : IInitializable, IDisposable
                 _player.AddIncome(new IncomeEntry
                 {
                     Date = _player.Days.Value,
-                    Category = "Random Event",
+                    Category = "Random Event(Подарок на День Рождения)",
                     Amount = gift,
                     Description = "Подарок на День Рождения"
                 });
