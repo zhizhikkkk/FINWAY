@@ -9,17 +9,14 @@ public class BankSelectionUI : MonoBehaviour
     public Transform bankButtonContainer;
     public Button bankButtonPrefab;
 
-    // Панель одной карты
     public GameObject singleCardPanel;
     public TextMeshProUGUI cardInfoText;
     public Button transferButton;
     public Button closeSingleCardPanelButton;
 
-    // КНОПКИ ДЛЯ "СНЯТЬ / ВНЕСТИ"
-    public Button withdrawButton;    // <-- новая
-    public Button depositButton;     // <-- новая
+    public Button withdrawButton;   
+    public Button depositButton;    
 
-    // Панель перевода (между картами)
     public GameObject transferPanel;
     public TextMeshProUGUI cardName;
     public TextMeshProUGUI cardNumber;
@@ -30,13 +27,11 @@ public class BankSelectionUI : MonoBehaviour
     public Button confirmTransferButton;
     public Button cancelTransferButton;
 
-    // Панель ввода суммы для Снятия
     public GameObject withdrawPanel;
     public TMP_InputField withdrawAmountInput;
     public Button confirmWithdrawButton;
     public Button cancelWithdrawButton;
 
-    // Панель ввода суммы для Внесения
     public GameObject depositPanel;
     public TMP_InputField depositAmountInput;
     public Button confirmDepositButton;
@@ -80,20 +75,16 @@ public class BankSelectionUI : MonoBehaviour
         closeSingleCardPanelButton.onClick.AddListener(() => singleCardPanel.SetActive(false));
         toCardInput.onValueChanged.AddListener(OnCardNumberChanged);
 
-        // Новые кнопки
         withdrawButton.onClick.AddListener(OnWithdrawClicked);
         depositButton.onClick.AddListener(OnDepositClicked);
 
-        // Панель Withdraw
         confirmWithdrawButton.onClick.AddListener(OnConfirmWithdraw);
         cancelWithdrawButton.onClick.AddListener(() => withdrawPanel.SetActive(false));
 
-        // Панель Deposit
         confirmDepositButton.onClick.AddListener(OnConfirmDeposit);
         cancelDepositButton.onClick.AddListener(() => depositPanel.SetActive(false));
     }
 
-    // Генерируем кнопки по названию банков
     private void GenerateBankButtons()
     {
         foreach (string bankName in _bankManager.GetBankNames())
@@ -191,11 +182,9 @@ public class BankSelectionUI : MonoBehaviour
         transferPanel.SetActive(false);
     }
 
-    // ====== НОВАЯ ЛОГИКА ДЛЯ WITHDRAW И DEPOSIT =======
 
     private void OnWithdrawClicked()
     {
-        // Открываем панель снятия
         withdrawPanel.SetActive(true);
         withdrawAmountInput.text = "";
     }
@@ -209,11 +198,9 @@ public class BankSelectionUI : MonoBehaviour
             return;
         }
 
-        // Снимаем с карты → в кэш
         bool success = _transferService.WithdrawToCash(_selectedCard.CardNumber, amount);
         if (success)
         {
-            // Сохраняем
             _dataManager.Save(_gameManager.PlayerModel);
             UpdateCardUI();
             Debug.Log("Withdraw success, data saved");
@@ -227,7 +214,6 @@ public class BankSelectionUI : MonoBehaviour
 
     private void OnDepositClicked()
     {
-        // Открываем панель внесения
         depositPanel.SetActive(true);
         depositAmountInput.text = "";
     }
@@ -241,7 +227,6 @@ public class BankSelectionUI : MonoBehaviour
             return;
         }
 
-        // Из кэша → на карту
         bool success = _transferService.DepositFromCash(_selectedCard.CardNumber, amount);
         if (success)
         {
@@ -258,7 +243,6 @@ public class BankSelectionUI : MonoBehaviour
 
     private void UpdateCardUI()
     {
-        // Обновляем текст баланса и cardInfo
         if (_selectedCard != null)
         {
             cardAmount.text = _selectedCard.Balance.ToString("F2") + "$";

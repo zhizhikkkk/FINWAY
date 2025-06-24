@@ -15,12 +15,11 @@ public class MapUIController : MonoBehaviour
     [Header("Graph Data")]
     [SerializeField] private LocationGraph locationGraph;
 
-    // Инъекции
     private PlayerLocationManager _locationManager;
     private PlayerModel _playerModel;
     private PlayerDataManager _playerDataManager;
     private ExpenseManager _expenseManager;
-    private LocationAvailabilityService _avail;  // <-- сервис для проверок
+    private LocationAvailabilityService _avail;
 
     private string _targetLocation;
     private float _busCost;
@@ -34,7 +33,7 @@ public class MapUIController : MonoBehaviour
         PlayerModel playerModel,
         PlayerDataManager dataManager,
         ExpenseManager expenseManager,
-        LocationAvailabilityService availabilityService)  // <-- получили сервис
+        LocationAvailabilityService availabilityService) 
     {
         _locationManager = locationManager;
         _playerModel = playerModel;
@@ -47,7 +46,6 @@ public class MapUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        // в случае, если вдруг инъекция ещё не произошла
         if (_playerModel == null || _locationManager == null)
         {
             Debug.LogWarning("[MapUIController] Dependencies not injected yet. Forcing injection.");
@@ -62,21 +60,15 @@ public class MapUIController : MonoBehaviour
         Debug.Log($"[MapUIController] Start - currentLocation={_locationManager.CurrentLocation}, budget={_playerModel.Budget.Value}");
     }
 
-    /// <summary>
-    /// Вызывается из OnClick() кнопок локаций (заданы в Инспекторе) с нужным ID.
-    /// </summary>
     public void OnLocationButtonClicked(string locationId)
     {
         int hour = _playerModel.Hours.Value;
 
-        // 1) Проверяем, открыта ли локация в данный час
         if (!_avail.IsOpen(locationId, hour))
         {
             Debug.LogWarning($"Локация «{locationId}» сейчас закрыта! Работает с {_avail.GetOpenHour(locationId)} до {_avail.GetCloseHour(locationId)}.");
             return;
         }
-
-        // 2) Если это та же локация — перезагрузить
         _targetLocation = locationId;
         string from = _locationManager.CurrentLocation;
         if (from == _targetLocation)
@@ -86,19 +78,16 @@ public class MapUIController : MonoBehaviour
             return;
         }
 
-        // 3) Рассчитываем автобусный маршрут (деньги)
         _busPath = LocationPathfinding.Dijkstra(locationGraph, from, _targetLocation, TravelMode.Money);
         _busCost = (_busPath != null && _busPath.Count > 1)
             ? LocationPathfinding.CalculatePathCost(_busPath, TravelMode.Money)
             : float.MaxValue;
 
-        // 4) Рассчитываем пешеходный маршрут (время)
         _walkPath = LocationPathfinding.Dijkstra(locationGraph, from, _targetLocation, TravelMode.Time);
         _walkCost = (_walkPath != null && _walkPath.Count > 1)
             ? LocationPathfinding.CalculatePathCost(_walkPath, TravelMode.Time)
             : float.MaxValue;
 
-        // 5) Открываем панель выбора способа
         ShowChoosePanel();
     }
 

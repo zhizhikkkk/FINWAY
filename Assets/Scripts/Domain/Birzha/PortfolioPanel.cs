@@ -5,7 +5,7 @@ using Zenject;
 public class PortfolioPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text portfolioText;
-    [SerializeField] private GameObject panel; // сам контейнер панельки
+    [SerializeField] private GameObject panel; 
 
     private PlayerModel playerModel;
 
@@ -20,12 +20,10 @@ public class PortfolioPanel : MonoBehaviour
          panel.SetActive(false);
     }
 
-    // Показываем панель и обновляем текст
     public void Show()
     {
        panel.SetActive(true);
 
-        // Собираем список акций
         var ownedStocks = playerModel.Portfolio.GetAllStocks();
         if (ownedStocks.Count == 0)
         {
@@ -33,7 +31,6 @@ public class PortfolioPanel : MonoBehaviour
             return;
         }
 
-        // Формируем строку
         string result = "Your Portfolio:\n";
         foreach (var owned in ownedStocks)
         {
@@ -42,7 +39,6 @@ public class PortfolioPanel : MonoBehaviour
         portfolioText.text = result;
     }
 
-    // Скрываем панель
     public void Hide()
     {
         panel.SetActive(false);

@@ -16,13 +16,10 @@ public class StockRowUI : MonoBehaviour
         stock = stockData;
         detailPanel = detailPanelRef;
 
-        // Устанавливаем текст
         symbolText.text = $"{stock.CompanyName} ({stock.Symbol})";
         priceText.text = $"${stock.CurrentPrice:F2}";
 
-        // На всякий случай очищаем старые слушатели (если были)
         infoButton.onClick.RemoveAllListeners();
-        // Добавляем новый
         infoButton.onClick.AddListener(ShowDetail);
     }
 

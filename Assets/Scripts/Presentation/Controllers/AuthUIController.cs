@@ -30,11 +30,9 @@ public class AuthUIController : MonoBehaviour
 
     private void Start()
     {
-        // Начальная настройка
         loginPanel.SetActive(true);
         registrationPanel.SetActive(false);
 
-        // Подписка на события
         loginButton.onClick.AddListener(HandleLogin);
         switchToRegisterButton.onClick.AddListener(ShowRegistrationPanel);
         registerButton.onClick.AddListener(HandleRegister);

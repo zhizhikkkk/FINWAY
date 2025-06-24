@@ -3,17 +3,16 @@ using UnityEngine;
 [System.Serializable]
 public class BankCard
 {
-    public string BankName;         // Название банка (например, "Kaspi")
-    public string CardNumber;       // 16-значный номер карты
-    public string ExpirationDate;   // Срок действия, формат "MM/YY"
-    public string CVV;              // 3-значный CVV
-    public float Balance;           // Баланс на карте
-    public bool IsCreditCard;       // Если true, карта кредитная (для будущего расширения)
+    public string BankName;         
+    public string CardNumber;       
+    public string ExpirationDate;   
+    public string CVV;              
+    public float Balance;          
+    public bool IsCreditCard;      
     public float CreditLimit { get; private set; }
     public float Debt { get; private set; }
 
 
-    // Конструктор для дебетовой карты (по умолчанию)
     public BankCard(string bankName, string cardNumber, string expirationDate, string cvv)
     {
         BankName = bankName;

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine; // чтобы использовать Random
+using UnityEngine; 
 
 [System.Serializable]
 public class Stock

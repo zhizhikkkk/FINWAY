@@ -13,9 +13,3 @@ public class AgentInteractionSignal : MonoBehaviour
         Target = target;
     }
 }
-//public static class Tags
-//{
-//    public const string Tv = "TV";
-//    public const string Bed = "Bed";
-//    public const string SlotMachine = "SlotMachine";
-//}

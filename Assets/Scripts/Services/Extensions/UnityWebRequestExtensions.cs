@@ -2,9 +2,6 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
 
-/// <summary>
-/// Ётот файл содержит метод-расширение дл€ UnityWebRequest, позвол€ющий использовать await с UnityWebRequestAsyncOperation.
-/// </summary>
 public static class UnityWebRequestExtensions
 {
     public static Task<UnityWebRequest> SendWebRequestAsync(this UnityWebRequest unityWebRequest)

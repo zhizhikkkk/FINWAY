@@ -17,11 +17,9 @@ public class GameManager : IInitializable
         Instance = this;
         _dataManager = dataManager;
 
-        // Пытаемся загрузить
         PlayerData savedData = _dataManager.Load();
         if (savedData != null)
         {
-            // Восстанавливаем
             PlayerModel = playerModel;
             PlayerModel.Cash.Value = savedData.Cash;
             PlayerModel.Budget.Value = savedData.Budget;
@@ -41,7 +39,6 @@ public class GameManager : IInitializable
             }
             if (savedData.PortfolioList != null)
             {
-                //PlayerModel.Portfolio.Clear();
                 foreach (var ownedEntry in savedData.PortfolioList)
                 {
                     PlayerModel.Portfolio.AddStock(
@@ -77,10 +74,9 @@ public class GameManager : IInitializable
 
     public void Initialize()
     {
-        // Дополнительная инициализация (если нужна)
+        
     }
 
-    // Вызывай этот метод при выходе из игры или ключевых событиях
     public void SaveData()
     {
         _dataManager.Save(PlayerModel);

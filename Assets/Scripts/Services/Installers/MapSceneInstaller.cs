@@ -9,7 +9,6 @@ public class MapSceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        // Говорим Zenject-у: ищи MapUIController в сцене, сделай AsSingle
         Container.Bind<MapUIController>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         if (!SceneManager.GetSceneByName("PersistentUI").isLoaded)
