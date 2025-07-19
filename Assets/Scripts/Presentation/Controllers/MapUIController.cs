@@ -59,7 +59,6 @@ public class MapUIController : MonoBehaviour
 
     public void OnLocationButtonClicked(string locationId)
     {
-        int hour = _playerModel.Hours.Value;
 
         _targetLocation = locationId;
         string from = _locationManager.CurrentLocation;

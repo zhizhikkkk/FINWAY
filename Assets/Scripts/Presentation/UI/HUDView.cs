@@ -28,7 +28,6 @@ public class HUDView : MonoBehaviour
         _playerModel.Budget.Subscribe(UpdateBudget).AddTo(_disposables);
         _playerModel.Energy.Subscribe(UpdateEnergy).AddTo(_disposables);
         _playerModel.Days.Subscribe(_ => UpdateTime()).AddTo(_disposables);
-        _playerModel.Hours.Subscribe(_ => UpdateTime()).AddTo(_disposables);
         _playerModel.Happiness.Subscribe(UpdateHappiness).AddTo(_disposables);
 
     }

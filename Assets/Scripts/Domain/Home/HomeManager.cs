@@ -30,6 +30,7 @@ public class HomeManager : MonoBehaviour
                 break;
 
             case "Bed":
+                Debug.Log("Salam");
                 sleepManager.StartSleeping(sig.Agent.transform);
                 break;
         }
@@ -38,8 +39,5 @@ public class HomeManager : MonoBehaviour
     {
         if (tvManager.IsWatching && (target == null || target.tag != "TV"))
             tvManager.StopWatching();
-
-        if (sleepManager.IsSleeping && (target == null || target.tag != "Bed"))
-            sleepManager.StopSleeping();
     }
 }

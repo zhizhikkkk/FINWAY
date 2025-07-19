@@ -2,79 +2,33 @@
 using TMPro;
 using UnityEngine;
 using Zenject;
+using UnityEngine.SceneManagement;
 
 public class SleepManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] TextMeshProUGUI sleepText;
+
     [Header("Баланс сна")]
-    [SerializeField] float energyPerHour = 2f;
-    [SerializeField] float happinessPerHour = 10f;
-    [SerializeField] float stopDistance = 13f;   
-    [SerializeField] float realSecPerGameHour = 3f;     
-    [SerializeField] float maxEnergy;
+    [SerializeField] float happinessAdd = 10f;   
+    [SerializeField] float maxEnergy=100f;
 
-    PlayerModel _player;
-    [Inject] void Construct(PlayerModel model) => _player = model;
+    private PlayerModel _player;
 
-    public bool IsSleeping => _sleeping;
-    bool _sleeping;
-    Transform _sleeper;         
-    Coroutine _loop;
-    float _timer;
+    [Inject]
+    void Construct(PlayerModel model)
+    {
+        _player = model;
+    }
+
 
     public void StartSleeping(Transform sleeper)
     {
-        if (_sleeping || _player.Energy.Value >= maxEnergy) return;
-
-        _sleeper = sleeper;
-        _sleeping = true;
-        _timer = 0f;
-        _loop = StartCoroutine(SleepLoop());
-        UpdateUi();
+        Debug.Log("StartSleeping");
+        _player.Energy.Value = maxEnergy;
+        _player.Happiness.Value += happinessAdd;
+        SceneManager.LoadScene("RealLife");
     }
 
-    public void StopSleeping()
-    {
-        if (!_sleeping) return;
-
-        _sleeping = false;
-        if (_loop != null) StopCoroutine(_loop);
-        _loop = null;
-        UpdateUi();
-    }
-
-    IEnumerator SleepLoop()
-    {
-        while (_sleeping)
-        {
-            if (Vector3.Distance(_sleeper.position, transform.position) > stopDistance)
-            {
-                StopSleeping();
-                UpdateUi();
-                yield break;
-            }
-
-            _timer += Time.unscaledDeltaTime;
-            if (_timer >= realSecPerGameHour)
-            {
-                _timer -= realSecPerGameHour;
-
-                _player.ChangeEnergy(energyPerHour);
-                _player.ChangeHappiness(happinessPerHour);
-
-                if (_player.Energy.Value >= maxEnergy)
-                {
-                    _player.Energy.Value = maxEnergy;
-                    StopSleeping();
-                    yield break;
-                }
-            }
-            UpdateUi();
-            yield return null;
-        }
-    }
-    void UpdateUi() =>
-        sleepText.text = _sleeping ? "Sleeping" : "";
-    void OnDestroy() => StopSleeping();
+    
 }

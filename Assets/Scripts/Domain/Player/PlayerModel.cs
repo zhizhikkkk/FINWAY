@@ -13,7 +13,6 @@ public partial class PlayerModel
 
     public ReactiveProperty<float> Happiness { get; private set; }
     public ReactiveProperty<int> Days { get; private set; }
-    public ReactiveProperty<int> Hours { get; private set; }
     public StockPortfolio Portfolio { get; private set; }
 
     public List<BankCard> BankCards { get;  set; }
@@ -27,7 +26,6 @@ public partial class PlayerModel
         Energy = new ReactiveProperty<float>(100f);
         Happiness = new ReactiveProperty<float>(50f);
         Days = new ReactiveProperty<int>(1);
-        Hours = new ReactiveProperty<int>(0);
         BankCards = new List<BankCard>();
         Portfolio = new StockPortfolio();
         WorkProgressMap = new Dictionary<string, float>();
@@ -77,14 +75,9 @@ public partial class PlayerModel
             Happiness.Value = 100f;
         }
     }
-    public void AddHours(int hoursToAdd)
+    public void AddDay()
     {
-        Hours.Value += hoursToAdd;
-        while (Hours.Value >= 24)
-        {
-            Hours.Value -= 24;
-            Days.Value += 1;
-        }
+        Days.Value++;
     }
 
     public void AddBankCard(BankCard card)
@@ -111,7 +104,6 @@ public partial class PlayerModel
         Energy.Value = 100f;
         Happiness.Value = 100f;
         Days.Value = 1;
-        Hours.Value = 0;
 
         BankCards.Clear();
         Portfolio.Clear();                

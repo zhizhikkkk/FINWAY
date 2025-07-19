@@ -20,7 +20,6 @@ public class PlayerDataManager
             Energy = playerModel.Energy.Value,
             Happiness = playerModel.Happiness.Value,
             Days = playerModel.Days.Value,
-            Hours = playerModel.Hours.Value,
             BankCards = playerModel.BankCards,
             WorkProgressList = new List<WorkProgressEntry>(),
             PortfolioList = new List<OwnedStockEntry>(),
@@ -84,7 +83,6 @@ public class PlayerDataManager
             Energy = 100f,
             Happiness = 100f,
             Days = 1,
-            Hours = 0,
 
             BankCards = new List<BankCard>(),
             WorkProgressList = new List<WorkProgressEntry>(),

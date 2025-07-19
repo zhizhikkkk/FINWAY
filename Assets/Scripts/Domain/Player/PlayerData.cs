@@ -9,7 +9,6 @@ public class PlayerData
     public float Happiness;
 
     public int Days;
-    public int Hours;
     public List<BankCard> BankCards;
     public List<WorkProgressEntry> WorkProgressList;
     public List<OwnedStockEntry> PortfolioList;

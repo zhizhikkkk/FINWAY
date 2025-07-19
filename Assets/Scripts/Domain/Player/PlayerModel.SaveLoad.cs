@@ -11,7 +11,6 @@ public partial class PlayerModel
             Energy = Energy.Value,
             Happiness = Happiness.Value,
             Days = Days.Value,
-            Hours = Hours.Value,
 
             BankCards = new List<BankCard>(BankCards),
             WorkProgressList = new List<WorkProgressEntry>(),
@@ -41,7 +40,6 @@ public partial class PlayerModel
         Energy.Value = d.Energy;
         Happiness.Value = d.Happiness;
         Days.Value = d.Days;
-        Hours.Value = d.Hours;
 
         BankCards.Clear(); BankCards.AddRange(d.BankCards);
         ExpenseLog.Clear(); ExpenseLog.AddRange(d.ExpenseLog);
