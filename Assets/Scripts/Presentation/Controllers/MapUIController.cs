@@ -19,7 +19,6 @@ public class MapUIController : MonoBehaviour
     private PlayerModel _playerModel;
     private PlayerDataManager _playerDataManager;
     private ExpenseManager _expenseManager;
-    private LocationAvailabilityService _avail;
 
     private string _targetLocation;
     private float _busCost;
@@ -32,14 +31,12 @@ public class MapUIController : MonoBehaviour
         PlayerLocationManager locationManager,
         PlayerModel playerModel,
         PlayerDataManager dataManager,
-        ExpenseManager expenseManager,
-        LocationAvailabilityService availabilityService) 
+        ExpenseManager expenseManager) 
     {
         _locationManager = locationManager;
         _playerModel = playerModel;
         _playerDataManager = dataManager;
         _expenseManager = expenseManager;
-        _avail = availabilityService;
 
         Debug.Log($"[MapUIController] Injected PlayerLocationManager: {_locationManager}");
     }
@@ -64,11 +61,6 @@ public class MapUIController : MonoBehaviour
     {
         int hour = _playerModel.Hours.Value;
 
-        if (!_avail.IsOpen(locationId, hour))
-        {
-            Debug.LogWarning($"Локация «{locationId}» сейчас закрыта! Работает с {_avail.GetOpenHour(locationId)} до {_avail.GetCloseHour(locationId)}.");
-            return;
-        }
         _targetLocation = locationId;
         string from = _locationManager.CurrentLocation;
         if (from == _targetLocation)
@@ -94,7 +86,7 @@ public class MapUIController : MonoBehaviour
     private void ShowChoosePanel()
     {
         string busStr = _busCost == float.MaxValue ? "N/A" : $"{_busCost:0} $";
-        string walkStr = _walkCost == float.MaxValue ? "N/A" : $"{_walkCost:0} h";
+        string walkStr = _walkCost == float.MaxValue ? "N/A" : $"{_walkCost:0} e";
         infoText.text = $"Travel from {_locationManager.CurrentLocation} to {_targetLocation}?\n" +
                         $"Bus cost:  {busStr}\n" +
                         $"Walk cost: {walkStr}\n" +
@@ -104,7 +96,6 @@ public class MapUIController : MonoBehaviour
 
     public void OnMoneyConfirm()
     {
-        Debug.Log("Suka");
         if (_busCost == float.MaxValue)
         {
             Debug.Log("Нет автобусного маршрута!");
@@ -125,7 +116,7 @@ public class MapUIController : MonoBehaviour
         SceneManager.LoadScene(_targetLocation);
     }
 
-    public void OnTimeConfirm()
+    public void OnEnergyConfirm()
     {
         if (_walkCost == float.MaxValue)
         {
@@ -133,7 +124,7 @@ public class MapUIController : MonoBehaviour
             return;
         }
 
-        _playerModel.AddHours(Mathf.CeilToInt(_walkCost));
+        _playerModel.ChangeEnergy(-Mathf.CeilToInt(_walkCost));
         _playerDataManager.Save(_playerModel);
 
         _locationManager.SetLocation(_targetLocation);

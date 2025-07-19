@@ -21,7 +21,7 @@ public class HUDView : MonoBehaviour
     public Sprite sunSprite;
     public Sprite moonSprite;
     [Inject]
-    public void Construct(PlayerModel playerModel, DayNightService dayNight)
+    public void Construct(PlayerModel playerModel)
     {
         _playerModel = playerModel;
         _playerModel.Cash.Subscribe(UpdateCash).AddTo(_disposables);
@@ -31,11 +31,6 @@ public class HUDView : MonoBehaviour
         _playerModel.Hours.Subscribe(_ => UpdateTime()).AddTo(_disposables);
         _playerModel.Happiness.Subscribe(UpdateHappiness).AddTo(_disposables);
 
-        dayNight.CurrentPeriod.Subscribe(p =>
-        {
-            dayNightIcon.sprite = (p == DayPeriod.Day) ? sunSprite : moonSprite;
-        })
-        .AddTo(_disposables);
     }
 
     private void Start()
@@ -72,6 +67,6 @@ public class HUDView : MonoBehaviour
     }
     private void UpdateTime()
     {
-        timeText.text = $"{_playerModel.Days.Value}d,{_playerModel.Hours.Value}h";
+        timeText.text = $"{_playerModel.Days.Value}d";
     }
 }

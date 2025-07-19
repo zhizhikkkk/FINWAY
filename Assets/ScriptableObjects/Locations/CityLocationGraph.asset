@@ -17,83 +17,83 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     edges:
     - toNodeId: CryptoLab
-      timeCost: 1
+      energyCost: 4
       moneyCost: 2
     - toNodeId: Birzha
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Bank
-      timeCost: 2
+      energyCost: 4
       moneyCost: 3
   - nodeId: Birzha
     position: {x: 0, y: 0}
     edges:
     - toNodeId: Home
-      timeCost: 1
+      energyCost: 4
       moneyCost: 2
     - toNodeId: Bank
-      timeCost: 1
+      energyCost: 4
       moneyCost: 2
     - toNodeId: Cryptolab
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Casino
-      timeCost: 2
+      energyCost: 4
       moneyCost: 3
   - nodeId: CryptoLab
     position: {x: 0, y: 0}
     edges:
     - toNodeId: Home
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Birzha
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Bank
-      timeCost: 2
+      energyCost: 4
       moneyCost: 3
     - toNodeId: Casino
-      timeCost: 2
+      energyCost: 5
       moneyCost: 3
   - nodeId: Bank
     position: {x: 0, y: 0}
     edges:
     - toNodeId: CryptoLab
-      timeCost: 2
+      energyCost: 3
       moneyCost: 3
     - toNodeId: Birzha
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Home
-      timeCost: 2
+      energyCost: 4
       moneyCost: 3
     - toNodeId: Casino
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Work
-      timeCost: 1
+      energyCost: 2
       moneyCost: 1
   - nodeId: Casino
     position: {x: 0, y: 0}
     edges:
     - toNodeId: CryptoLab
-      timeCost: 2
+      energyCost: 4
       moneyCost: 3
     - toNodeId: Bank
-      timeCost: 2
+      energyCost: 4
       moneyCost: 3
     - toNodeId: Birzha
-      timeCost: 2
+      energyCost: 5
       moneyCost: 3
     - toNodeId: Work
-      timeCost: 1
+      energyCost: 2
       moneyCost: 2
   - nodeId: Work
     position: {x: 0, y: 0}
     edges:
     - toNodeId: Bank
-      timeCost: 1
+      energyCost: 3
       moneyCost: 2
     - toNodeId: Casino
-      timeCost: 1
+      energyCost: 4
       moneyCost: 2

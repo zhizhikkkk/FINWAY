@@ -64,7 +64,6 @@ public class TVManager : MonoBehaviour
             {
                 _timer -= realSecPerGameHour;
 
-                _player.AddHours(1);
                 _player.ChangeHappiness(happinessPerHour);
                 _player.ChangeEnergy(-energyPerHour);
             }

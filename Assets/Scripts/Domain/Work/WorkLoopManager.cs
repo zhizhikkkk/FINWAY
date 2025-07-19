@@ -81,7 +81,6 @@ public class WorkLoopManager : MonoBehaviour
 
                     for (int i = 0; i < hoursToAdd; i++)
                     {
-                        playerModel.AddHours(1);
                         playerModel.ChangeHappiness(-happinessCost);
                         playerModel.ChangeEnergy(-energyCost);
 

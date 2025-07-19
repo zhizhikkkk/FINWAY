@@ -44,7 +44,7 @@ public static class LocationPathfinding
                 if (!unvisited.Contains(edge.toNodeId)) continue;
 
                 float edgeCost = (travelMode == TravelMode.Time)
-                                 ? edge.timeCost
+                                 ? edge.energyCost
                                  : edge.moneyCost;
 
                 float alt = dist[u] + edgeCost;
@@ -79,7 +79,7 @@ public static class LocationPathfinding
             var edge = path[i].edges.Find(e => e.toNodeId == path[i + 1].nodeId);
             if (edge != null)
             {
-                total += (mode == TravelMode.Time) ? edge.timeCost : edge.moneyCost;
+                total += (mode == TravelMode.Time) ? edge.energyCost : edge.moneyCost;
             }
         }
         return total;

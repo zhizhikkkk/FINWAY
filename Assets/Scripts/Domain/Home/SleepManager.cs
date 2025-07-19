@@ -60,7 +60,6 @@ public class SleepManager : MonoBehaviour
             {
                 _timer -= realSecPerGameHour;
 
-                _player.AddHours(1);
                 _player.ChangeEnergy(energyPerHour);
                 _player.ChangeHappiness(happinessPerHour);
 

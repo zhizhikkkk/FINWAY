@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// ’ранит список локаций (узлов, NodeData) и дорог (рЄбер, EdgeData), которые их соедин€ют. Ёто основа вашего графа
-/// </summary>
 [CreateAssetMenu(menuName = "Finway/LocationGraph")]
 public class LocationGraph : ScriptableObject
 {
@@ -26,6 +23,6 @@ public class NodeData
 public class EdgeData
 {
     public string toNodeId;
-    public float timeCost;
+    public float energyCost;
     public float moneyCost;
 }
